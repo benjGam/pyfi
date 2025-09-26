@@ -32,6 +32,16 @@ class File(Systorage):
         with open(self.get_path(), "w") as fs:
             fs.write(text_to_write)
 
+    def read_to_end(self, unexisting_raise: bool = True) -> str:
+        file_text_content = ""
+        if not self.exists():
+            if unexisting_raise: raise Exception(f"\"{self.get_path()}\" file do not exist.")
+        else:
+            with open(self.get_path(), "r") as fs:
+                fs.seek(0)
+                file_text_content = fs.read()
+        return file_text_content
+
     def delete_content(self) -> bool:
         print(self.exists())
         if self.exists() == False: return False
