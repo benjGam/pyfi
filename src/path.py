@@ -16,6 +16,9 @@ class Path:
         parent_names = self._path_literal.split("/")
         return parent_names[len(parent_names) -1]
 
+    def get_name(self):
+        return self._path_literal[self._path_literal.rfind("/")+1 : self._path_literal.rfind(".")]
+
     ### Utils methods
 
     def format_literal_path(self, path_literal: str) -> str:
