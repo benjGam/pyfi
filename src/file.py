@@ -6,6 +6,8 @@ class File(Systorage):
 
     def __init__(self, path: str):
         super().__init__(path)
+        if self.exists() and not os.path.isfile(path):
+            raise Exception(f"\"{path}\" is not a file.")
 
     def get_extension(self) -> str:
         path = self.get_path()
