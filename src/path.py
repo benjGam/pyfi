@@ -2,4 +2,13 @@ class Path:
     _path_literal: str
 
     def __init__(self, path_literal: str):
-        self._path_literal = path_literal
+        self._path_literal = self.format_literal_path(path_literal)
+
+    ### Utils methods
+
+    def format_literal_path(self, path_literal: str) -> str:
+        # Replace "\" by "/" (universal path format)
+        path_literal = path_literal.replace("\\", "/")
+        # Remove all "//" occurrences in path to form it well
+        while ("//" in path_literal): path_literal = path_literal.replace("//", "/")
+        return path_literal
