@@ -23,4 +23,4 @@ class Path:
         path_literal = path_literal.replace("\\", "/")
         # Remove all "//" occurrences in path to form it well
         while ("//" in path_literal): path_literal = path_literal.replace("//", "/")
-        return path_literal
+        return path_literal if not path_literal.endswith("/") else path_literal[0:-1]
