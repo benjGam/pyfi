@@ -7,7 +7,7 @@ class File(Systorage):
         super().__init__(path)
 
     def get_extension(self):
-        path = self._path._path_literal
+        path = self.get_path()
         return path[path.rfind("."):len(path)]
     
     def get_name(self, with_extension: bool = False):
