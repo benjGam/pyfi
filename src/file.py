@@ -1,4 +1,5 @@
 from src.systorage import Systorage
+import os
 
 class File(Systorage):
     _extension: str
@@ -31,3 +32,8 @@ class File(Systorage):
     def delete_content(self):
         if not self.get_path_object().exists(): raise
         self.write("")
+
+    def delete(self, delete_content:bool = False):
+        if not self.get_path_object().exists(): raise
+        if delete_content: self.delete_content()
+        os.remove(self.get_path())
