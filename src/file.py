@@ -27,3 +27,7 @@ class File(Systorage):
             self.create()        
         with open(self.get_path(), "w") as fs:
             fs.write(text_to_write)
+
+    def delete_content(self):
+        if not self.get_path_object().exists(): raise
+        self.write("")
