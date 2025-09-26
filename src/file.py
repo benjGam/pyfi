@@ -16,27 +16,28 @@ class File(Systorage):
     
     def create(self) -> bool:
         self.get_path_object().touch(exist_ok=True)
-        return self.get_path_object().exists()
+        return self.exists()
 
     def append(self, text_to_append: str) -> None:
-        if not self.get_path_object().exists():
+        if not self.exists():
             self.create()
         with open(self.get_path(), "a") as fs:
             fs.write(text_to_append)
 
     def write(self, text_to_write: str) -> None:
-        if not self.get_path_object().exists():
+        if not self.exists():
             self.create()        
         with open(self.get_path(), "w") as fs:
             fs.write(text_to_write)
 
     def delete_content(self) -> bool:
-        if not self.get_path_object().exists(): return False
+        print(self.exists())
+        if self.exists() == False: return False
         self.write("")
         return True
 
     def delete(self, delete_content:bool = False) -> bool:
-        if not self.get_path_object().exists(): return False
+        if not self.exists(): return False
         if delete_content: self.delete_content()
         os.remove(self.get_path())
-        return self.get_path_object().exists() == False
+        return self.exists() == False
