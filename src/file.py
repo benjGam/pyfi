@@ -12,3 +12,6 @@ class File(Systorage):
     
     def get_name(self, with_extension: bool = False):
         return super().get_name() + (self.get_extension() if with_extension else "")
+    
+    def create(self):
+        self.get_path_object().touch(exist_ok=True)
