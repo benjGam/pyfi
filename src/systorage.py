@@ -16,3 +16,6 @@ class Systorage:
     
     def get_parent_name(self):
         return self._parent_name
+    
+    def get_path(self):
+        return self._path._path_literal
