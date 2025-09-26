@@ -21,3 +21,9 @@ class File(Systorage):
             self.create()
         with open(self.get_path(), "a") as fs:
             fs.write(text_to_append)
+
+    def write(self, text_to_write):
+        if not self.get_path_object().exists():
+            self.create()        
+        with open(self.get_path(), "w") as fs:
+            fs.write(text_to_write)
