@@ -10,6 +10,9 @@ class Systorage:
         self._parent_name = self._path.get_parent_name()
         self._name = self._path.get_name()
 
+    def exists(self) -> bool:
+        return self.get_path_object().exists()
+
     # Getters
     def get_name(self):
         return self._name
