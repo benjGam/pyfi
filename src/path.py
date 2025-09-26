@@ -2,28 +2,34 @@ from pathlib import Path as path
 import os.path as syspath 
 
 class Path:
-    _path_literal: str
-    _internal_path: path
+    _literal: str
+    _internal: path
 
-    def __init__(self, path_literal: str):
-        self._path_literal = self.format_literal_path(path_literal)
-        self._internal_path = path(self._path_literal)
+    def __init__(self, literal: str):
+        self._literal = self.format_literal_path(literal)
+        self._internal = path(self._literal)
 
     def exists(self):
-        return syspath.exists(self._path_literal)
+        return syspath.exists(self._literal)
 
     def get_parent_name(self):
-        parent_names = self._path_literal.split("/")
+        parent_names = self._literal.split("/")
         return parent_names[len(parent_names) -2]
 
     def get_name(self):
-        return self._path_literal[self._path_literal.rfind("/")+1 : self._path_literal.rfind(".")]
+        return self._literal[self._literal.rfind("/")+1 : self._literal.rfind(".")]
+
+    def get_literal(self):
+        return self._literal
+    
+    def get_internal(self):
+        return self._internal
 
     ### Utils methods
 
-    def format_literal_path(self, path_literal: str) -> str:
+    def format_literal_path(self, literal: str) -> str:
         # Replace "\" by "/" (universal path format)
-        path_literal = path_literal.replace("\\", "/")
+        literal = literal.replace("\\", "/")
         # Remove all "//" occurrences in path to form it well
-        while ("//" in path_literal): path_literal = path_literal.replace("//", "/")
-        return path_literal if not path_literal.endswith("/") else path_literal[0:-1]
+        while ("//" in literal): literal = literal.replace("//", "/")
+        return literal if not literal.endswith("/") else literal[0:-1]
