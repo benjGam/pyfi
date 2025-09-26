@@ -17,13 +17,17 @@ class Path:
         return parent_names[len(parent_names) -2]
 
     def get_name(self):
-        return self._literal[self._literal.rfind("/")+1 : self._literal.rfind(".")]
+        last_index_of_dot = self._literal.rfind(".")
+        return self._literal[self._literal.rfind("/")+1 : len(self._literal) if last_index_of_dot == -1 else last_index_of_dot]
 
     def get_literal(self):
         return self._literal
     
     def get_internal(self):
         return self._internal
+    
+    def get_files(self, recursively: bool = False):
+        return list(map(lambda path: self.format_literal_path(str(path)), (self._internal.rglob if recursively else self._internal.glob)("*")))
 
     ### Utils methods
 
