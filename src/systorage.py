@@ -9,3 +9,10 @@ class Systorage:
         self._path = Path(path)
         self._parent_name = self._path.get_parent_name()
         self._name = self._path.get_name()
+
+    # Getters
+    def get_name(self):
+        return self._name
+    
+    def get_parent_name(self):
+        return self._parent_name
