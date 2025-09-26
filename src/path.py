@@ -12,6 +12,10 @@ class Path:
     def exists(self):
         return syspath.exists(self._path_literal)
 
+    def get_parent_name(self):
+        parent_names = self._path_literal.split("/")
+        return parent_names[len(parent_names) -1]
+
     ### Utils methods
 
     def format_literal_path(self, path_literal: str) -> str:
