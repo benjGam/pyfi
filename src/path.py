@@ -26,8 +26,11 @@ class Path:
     def get_internal(self):
         return self._internal
     
-    def get_files(self, recursively: bool = False):
+    def get_systorage_paths(self, recursively: bool = False):
         return list(map(lambda path: self.format_literal_path(str(path)), (self._internal.rglob if recursively else self._internal.glob)("*")))
+
+    def get_files_paths(self, recursively: bool = False):
+        return list(filter(lambda path: syspath.isfile(path), self.get_systorage_paths(recursively)))
 
     ### Utils methods
 
