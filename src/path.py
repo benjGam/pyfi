@@ -14,7 +14,7 @@ class Path:
 
     def get_parent_name(self):
         parent_names = self._path_literal.split("/")
-        return parent_names[len(parent_names) -1]
+        return parent_names[len(parent_names) -2]
 
     def get_name(self):
         return self._path_literal[self._path_literal.rfind("/")+1 : self._path_literal.rfind(".")]
