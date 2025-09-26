@@ -15,3 +15,9 @@ class File(Systorage):
     
     def create(self):
         self.get_path_object().touch(exist_ok=True)
+
+    def append(self, text_to_append):
+        if not self.get_path_object().exists():
+            self.create()
+        with open(self.get_path(), "a") as fs:
+            fs.write(text_to_append)
