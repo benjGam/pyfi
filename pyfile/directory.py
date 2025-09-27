@@ -24,3 +24,10 @@ class Directory(pyfile.Systorage):
             for dir in self._directories:
                 to_return.append(dir.get_files(recursively))
         return flatten(to_return)
+    
+    def get_files(self, recursively: bool = False):
+        to_return = [self._files]
+        if recursively:
+            for dir in self._directories:
+                to_return.append(dir.get_files(recursively))
+        return flatten(to_return)
