@@ -100,3 +100,58 @@ class Directory(pyfile.Systorage):
             for dir in self._directories:
                 to_return.append(dir.get_files(recursively, segmentation))
         return flatten(to_return)
+
+    def get_directories_paths(
+        self, 
+        recursively: bool = False, 
+        segmentation: bool = False
+    ) -> list[dict[str, list[str]]] | list[str]:
+        """
+        Retrieve the paths of all subdirectories contained in this directory.
+
+        Args:
+            recursively (bool, optional): 
+                If True, includes subdirectories of all nested directories recursively.
+                Defaults to False.
+            segmentation (bool, optional): 
+                If True, groups results by directory in a dict form:
+                {directory_path: [subdirectory_paths]}.
+                If False (default), returns a flat list of subdirectory paths.
+
+        Returns:
+            list[str] | list[dict[str, list[str]]]: 
+                A flat list of subdirectory paths, or a segmented dictionary-based list.
+        """
+        self_directories_paths = list(map(lambda x: x.get_path(), self._directories))
+        to_return = [{self.get_path(): self_directories_paths} if segmentation else self_directories_paths]
+        if recursively:
+            for dir in self._directories:
+                to_return.append(dir.get_directories_paths(recursively, segmentation))
+        return flatten(to_return)
+    
+    def get_directories(
+        self, 
+        recursively: bool = False, 
+        segmentation: bool = False
+    ) -> list[dict[pyfile.Directory, list[pyfile.Directory]]] | list[pyfile.Directory]:
+        """
+        Retrieve subdirectory objects contained in this directory.
+
+        Args:
+            recursively (bool, optional): 
+                If True, includes subdirectories of all nested directories recursively.
+                Defaults to False.
+            segmentation (bool, optional): 
+                If True, groups results by directory in a dict form:
+                {Directory: [subdirectories]}.
+                If False (default), returns a flat list of Directory objects.
+
+        Returns:
+            list[pyfile.Directory] | list[dict[pyfile.Directory, list[pyfile.Directory]]]: 
+                A flat list of Directory objects, or a segmented dictionary-based list.
+        """
+        to_return = [{self: self._directories} if segmentation else self._directories]
+        if recursively:
+            for dir in self._directories:
+                to_return.append(dir.get_directories(recursively, segmentation))
+        return flatten(to_return)
