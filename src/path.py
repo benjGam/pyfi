@@ -1,4 +1,5 @@
 from pathlib import Path as path
+from src.file import File
 import os.path as syspath 
 
 class Path:
@@ -31,6 +32,9 @@ class Path:
 
     def get_files_paths(self, recursively: bool = False):
         return list(filter(lambda path: syspath.isfile(path), self.get_systorage_paths(recursively)))
+
+    def get_files(self, recursively: bool = False):
+        return list(map(lambda path: File(path), self.get_files_paths(recursively)))
 
     ### Utils methods
 
