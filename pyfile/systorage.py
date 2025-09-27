@@ -1,5 +1,5 @@
-from src.path import Path
 from pathlib import Path as plPath
+import pyfile.path as PiFilePath
 
 class Systorage:
     """
@@ -11,7 +11,7 @@ class Systorage:
     and path, along with utilities to check for its existence.
     """
 
-    _path: Path
+    _path: PiFilePath.Path
     _parent_name: str
     _self_name: str
 
@@ -22,7 +22,7 @@ class Systorage:
         Args:
             path (str): Absolute or relative path to the storage element.
         """
-        self._path = Path(path)
+        self._path = PiFilePath.Path(path)
         self._parent_name = self._path.get_parent_name()
         self._name = self._path.get_name()
 
