@@ -40,8 +40,8 @@ class Path:
     def get_directories_paths(self, recursively: bool = False):
         return list(filter(lambda path: syspath.isdir(path), self.get_systorage_paths(recursively)))
 
-    def get_directories(self):
-        return list(map(lambda path: Directory(path), self.get_directories_paths()))
+    def get_directories(self, recursively: bool = False):
+        return list(map(lambda path: Directory(path, recursively), self.get_directories_paths()))
 
     ### Utils methods
 
