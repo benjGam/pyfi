@@ -18,11 +18,12 @@ class Directory(pyfile.Systorage):
         self._files = pyfile.Path(self.get_path()).get_files()
         self._directories = pyfile.Path(self.get_path()).get_directories(recursive_load)
 
-    def get_files_paths(self, recursively: bool = False):
-        to_return = [{self.get_path(): list(map(lambda x: x.get_path(), self._files))}]
+    def get_files_paths(self, recursively: bool = False, segmentation: bool = False):
+        self_files_paths = list(map(lambda x: x.get_path(), self._files))
+        to_return = [{self.get_path(): self_files_paths} if segmentation else self_files_paths]
         if recursively:
             for dir in self._directories:
-                to_return.append(dir.get_files(recursively))
+                to_return.append(dir.get_files_paths(recursively, segmentation))
         return flatten(to_return)
     
     def get_files(self, recursively: bool = False, segmentation: bool = False):
