@@ -1,7 +1,5 @@
-from src.systorage import Systorage
-from src.file import File
-from src.path import Path
 from __future__ import annotations
+from src import Systorage, File
 import os
 
 class Directory(Systorage):
@@ -16,5 +14,6 @@ class Directory(Systorage):
         if auto_load: self.load(True)
 
     def load(self, recursive_load: bool = False) -> None:
+        from src import Path
         self._files = Path(self.get_path()).get_files()
         self._directories = Path(self.get_path()).get_directories(recursive_load)
