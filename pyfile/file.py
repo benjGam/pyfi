@@ -1,4 +1,4 @@
-from src.systorage import Systorage
+from pyfile.systorage import Systorage
 import os
 
 class File(Systorage):
