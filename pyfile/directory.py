@@ -25,9 +25,9 @@ class Directory(pyfile.Systorage):
                 to_return.append(dir.get_files(recursively))
         return flatten(to_return)
     
-    def get_files(self, recursively: bool = False):
-        to_return = [self._files]
+    def get_files(self, recursively: bool = False, segmentation: bool = False):
+        to_return = [{self: self._files} if segmentation else self._files]
         if recursively:
             for dir in self._directories:
-                to_return.append(dir.get_files(recursively))
+                to_return.append(dir.get_files(recursively, segmentation))
         return flatten(to_return)
