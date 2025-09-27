@@ -78,7 +78,8 @@ class Directory(pyfile.Systorage):
     def get_files(
         self, 
         recursively: bool = False, 
-        segmentation: bool = False
+        segmentation: bool = False,
+        extensions: list[str] = []
     ) -> list[dict[pyfile.Directory, list[pyfile.File]]] | list[pyfile.File]:
         """
         Retrieve file objects contained in this directory.
@@ -96,10 +97,11 @@ class Directory(pyfile.Systorage):
             list[pyfile.File] | list[dict[pyfile.Directory, list[pyfile.File]]]: 
                 A flat list of File objects, or a segmented dictionary-based list.
         """
-        to_return = [{self: self._files} if segmentation else self._files]
+        local_files_list = self._files if len(extensions) == 0 else list(filter(lambda file: file.get_extension() in extensions, self._files))
+        to_return = [{self: local_files_list} if segmentation else local_files_list]
         if recursively:
             for dir in self._directories:
-                to_return.append(dir.get_files(recursively, segmentation))
+                to_return.append(dir.get_files(recursively, segmentation, extensions))
         return flatten(to_return)
 
     def get_directories_paths(
