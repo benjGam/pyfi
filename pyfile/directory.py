@@ -1,6 +1,7 @@
 from __future__ import annotations
 import pyfile
 import os
+from .utils import *
 
 class Directory(pyfile.Systorage):
     
@@ -16,3 +17,10 @@ class Directory(pyfile.Systorage):
     def load(self, recursive_load: bool = False) -> None:        
         self._files = pyfile.Path(self.get_path()).get_files()
         self._directories = pyfile.Path(self.get_path()).get_directories(recursive_load)
+
+    def get_files_paths(self, recursively: bool = False):
+        to_return = [{self.get_path(): list(map(lambda x: x.get_path(), self._files))}]
+        if recursively:
+            for dir in self._directories:
+                to_return.append(dir.get_files(recursively))
+        return flatten(to_return)
