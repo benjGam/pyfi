@@ -30,11 +30,12 @@ class Path:
     def get_systorage_paths(self, recursively: bool = False):
         return list(map(lambda path: self.format_literal_path(str(path)), (self._internal.rglob if recursively else self._internal.glob)("*")))
 
-    def get_files_paths(self, recursively: bool = False):
-        return list(filter(lambda path: syspath.isfile(path), self.get_systorage_paths(recursively)))
+    def get_files_paths(self, recursively: bool = False, extensions: list[str] = []):
+        return list(filter(lambda current_path: syspath.isfile(current_path) and (True if len(extensions) == 0 else (current_path[current_path.rfind("."):len(current_path)] in extensions)), self.get_systorage_paths(recursively)))
 
-    def get_files(self, recursively: bool = False):
-        return list(map(lambda path: pyfile.File(path), self.get_files_paths(recursively)))
+    def get_files(self, recursively: bool = False, extensions: list[str] = []):
+        builded_files = map(lambda path: pyfile.File(path), self.get_files_paths(recursively, extensions))
+        return list(builded_files if len(extensions) == 0 else filter(lambda builded_file: builded_file.get_extension() in extensions, builded_files))
     
     def get_directories_paths(self, recursively: bool = False):
         return list(filter(lambda path: syspath.isdir(path), self.get_systorage_paths(recursively)))
