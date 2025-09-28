@@ -1,12 +1,13 @@
 from pyfile.systorage import Systorage
 import os
 
+
 class File(Systorage):
     """
     Class representing a file in the storage system.
 
     This class extends `Systorage` and provides methods
-    to manipulate files in the filesystem: creation, reading, 
+    to manipulate files in the filesystem: creation, reading,
     writing, deletion, etc.
     """
 
@@ -24,7 +25,7 @@ class File(Systorage):
         """
         super().__init__(path)
         if self.exists() and not os.path.isfile(path):
-            raise Exception(f"\"{path}\" is not a file.")
+            raise Exception(f'"{path}" is not a file.')
 
     def get_extension(self) -> str:
         """
@@ -34,8 +35,8 @@ class File(Systorage):
             str: File extension including the dot.
         """
         path = self.get_path()
-        return path[path.rfind("."):len(path)]
-    
+        return path[path.rfind(".") : len(path)]
+
     def get_name(self, with_extension: bool = False) -> str:
         """
         Return the file name, with or without extension.
@@ -48,7 +49,7 @@ class File(Systorage):
             str: File name.
         """
         return super().get_name() + (self.get_extension() if with_extension else "")
-    
+
     def create(self) -> bool:
         """
         Create the file if it does not already exist.
@@ -75,7 +76,7 @@ class File(Systorage):
 
         Args:
             text_to_write (str): New file content.
-        """       
+        """
         with open(self.get_path(), "w") as fs:
             fs.write(text_to_write)
 
@@ -84,7 +85,7 @@ class File(Systorage):
         Read and return the entire file content.
 
         Args:
-            unexisting_raise (bool, optional): 
+            unexisting_raise (bool, optional):
                 If True (default), raises an exception if the file does not exist.
                 If False, returns an empty string in that case.
 
@@ -97,7 +98,7 @@ class File(Systorage):
         file_text_content = ""
         if not self.exists():
             if unexisting_raise:
-                raise Exception(f"\"{self.get_path()}\" file do not exist.")
+                raise Exception(f'"{self.get_path()}" file do not exist.')
         else:
             with open(self.get_path(), "r") as fs:
                 fs.seek(0)
@@ -121,14 +122,16 @@ class File(Systorage):
         Delete the file from the filesystem.
 
         Args:
-            delete_content (bool, optional): 
-                If True, clears the file before deleting it. 
+            delete_content (bool, optional):
+                If True, clears the file before deleting it.
                 Defaults to False.
 
         Returns:
             bool: True if the file was deleted, False otherwise.
         """
-        if not self.exists(): return False
-        if delete_content: self.delete_content()
+        if not self.exists():
+            return False
+        if delete_content:
+            self.delete_content()
         os.remove(self.get_path())
         return self.exists() == False
