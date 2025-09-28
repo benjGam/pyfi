@@ -3,15 +3,16 @@ import pyfile
 from pyfile.utils import *
 from pyfile.enums import *
 import os.path as syspath
-from typing import List, Union
+from typing import List
+
 
 class Path:
     """
     A wrapper class for filesystem paths.
 
-    This class provides both a literal string representation (`_literal`) 
-    and a `pathlib.Path` object (`_internal`) of the path. It includes 
-    methods to retrieve files, directories, and systorage objects, 
+    This class provides both a literal string representation (`_literal`)
+    and a `pathlib.Path` object (`_internal`) of the path. It includes
+    methods to retrieve files, directories, and systorage objects,
     optionally filtering by extensions and supporting recursive searches.
     """
 
@@ -55,7 +56,10 @@ class Path:
             str: Name of the file or directory.
         """
         last_index_of_dot = self._literal.rfind(".")
-        return self._literal[self._literal.rfind("/") + 1 : len(self._literal) if last_index_of_dot == -1 else last_index_of_dot]
+        return self._literal[
+            self._literal.rfind("/")
+            + 1 : len(self._literal) if last_index_of_dot == -1 else last_index_of_dot
+        ]
 
     def get_literal(self) -> str:
         """
@@ -65,7 +69,7 @@ class Path:
             str: The formatted path string.
         """
         return self._literal
-    
+
     def get_internal(self) -> path:
         """
         Get the internal pathlib.Path object.
@@ -74,7 +78,7 @@ class Path:
             pathlib.Path: The internal Path object.
         """
         return self._internal
-    
+
     def get_systorage_paths(self, recursively: bool = False) -> List[str]:
         """
         Retrieve all items (files and directories) under this path.
@@ -85,12 +89,16 @@ class Path:
         Returns:
             List[str]: A list of formatted paths for all contained items.
         """
-        return list(map(
-            lambda path: self.format_literal_path(str(path)),
-            (self._internal.rglob if recursively else self._internal.glob)("*")
-        ))
+        return list(
+            map(
+                lambda path: self.format_literal_path(str(path)),
+                (self._internal.rglob if recursively else self._internal.glob)("*"),
+            )
+        )
 
-    def get_files_paths(self, recursively: bool = False, extensions: List[Extensions | str] = []) -> List[str]:
+    def get_files_paths(
+        self, recursively: bool = False, extensions: List[Extensions | str] = []
+    ) -> List[str]:
         """
         Get paths of all files, optionally filtered by extensions.
 
@@ -102,14 +110,24 @@ class Path:
             List[str]: List of file paths matching the criteria.
         """
         extensions = convert_enum_values_to_str(extensions)
-        return list(filter(
-            lambda current_path: syspath.isfile(current_path) and (
-                True if len(extensions) == 0 else (current_path[current_path.rfind("."):len(current_path)] in extensions)
-            ),
-            self.get_systorage_paths(recursively)
-        ))
+        return list(
+            filter(
+                lambda current_path: syspath.isfile(current_path)
+                and (
+                    True
+                    if len(extensions) == 0
+                    else (
+                        current_path[current_path.rfind(".") : len(current_path)]
+                        in extensions
+                    )
+                ),
+                self.get_systorage_paths(recursively),
+            )
+        )
 
-    def get_files(self, recursively: bool = False, extensions: List[Extensions | str] = []) -> List[pyfile.File]:
+    def get_files(
+        self, recursively: bool = False, extensions: List[Extensions | str] = []
+    ) -> List[pyfile.File]:
         """
         Get File objects for all files in the path, optionally filtered by extensions.
 
@@ -121,11 +139,19 @@ class Path:
             List[pyfile.File]: List of File objects corresponding to the filtered files.
         """
         extensions = convert_enum_values_to_str(extensions)
-        builded_files = map(lambda path: pyfile.File(path), self.get_files_paths(recursively, extensions))
-        return list(builded_files if len(extensions) == 0 else filter(
-            lambda builded_file: builded_file.get_extension() in extensions, builded_files
-        ))
-    
+        builded_files = map(
+            lambda path: pyfile.File(path),
+            self.get_files_paths(recursively, extensions),
+        )
+        return list(
+            builded_files
+            if len(extensions) == 0
+            else filter(
+                lambda builded_file: builded_file.get_extension() in extensions,
+                builded_files,
+            )
+        )
+
     def get_directories_paths(self, recursively: bool = False) -> List[str]:
         """
         Get paths of all subdirectories in this path.
@@ -136,7 +162,11 @@ class Path:
         Returns:
             List[str]: List of directory paths.
         """
-        return list(filter(lambda path: syspath.isdir(path), self.get_systorage_paths(recursively)))
+        return list(
+            filter(
+                lambda path: syspath.isdir(path), self.get_systorage_paths(recursively)
+            )
+        )
 
     def get_directories(self, recursively: bool = False) -> List[pyfile.Directory]:
         """
@@ -148,7 +178,12 @@ class Path:
         Returns:
             List[pyfile.Directory]: List of Directory objects for each subdirectory.
         """
-        return list(map(lambda path: pyfile.Directory(path, recursively), self.get_directories_paths()))
+        return list(
+            map(
+                lambda path: pyfile.Directory(path, recursively),
+                self.get_directories_paths(),
+            )
+        )
 
     ### Utility methods
 
@@ -166,6 +201,6 @@ class Path:
             str: Formatted path string.
         """
         literal = literal.replace("\\", "/")
-        while ("//" in literal):
+        while "//" in literal:
             literal = literal.replace("//", "/")
         return literal if not literal.endswith("/") else literal[0:-1]

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Document(Enum):
     TXT = ".txt"
     DOC = ".doc"
@@ -7,6 +8,7 @@ class Document(Enum):
     PDF = ".pdf"
     ODT = ".odt"
     RTF = ".rtf"
+
 
 class Spreadsheet(Enum):
     XLS = ".xls"
@@ -16,6 +18,7 @@ class Spreadsheet(Enum):
     PPT = ".ppt"
     PPTX = ".pptx"
     ODP = ".odp"
+
 
 class Image(Enum):
     JPG = ".jpg"
@@ -27,6 +30,7 @@ class Image(Enum):
     TIF = ".tif"
     SVG = ".svg"
 
+
 class Audio(Enum):
     MP3 = ".mp3"
     WAV = ".wav"
@@ -34,12 +38,14 @@ class Audio(Enum):
     AAC = ".aac"
     OGG = ".ogg"
 
+
 class Video(Enum):
     MP4 = ".mp4"
     AVI = ".avi"
     MKV = ".mkv"
     MOV = ".mov"
     WMV = ".wmv"
+
 
 class Code(Enum):
     C = ".c"
@@ -56,6 +62,7 @@ class Code(Enum):
     SQL = ".sql"
     SH = ".sh"
 
+
 class Archive(Enum):
     ZIP = ".zip"
     RAR = ".rar"
@@ -63,12 +70,14 @@ class Archive(Enum):
     TAR = ".tar"
     GZ = ".gz"
 
+
 class SystemApp(Enum):
     EXE = ".exe"
     MSI = ".msi"
     APK = ".apk"
     DMG = ".dmg"
     ISO = ".iso"
+
 
 class Extensions:
     Document = Document
