@@ -1,5 +1,6 @@
 from __future__ import annotations
 import pyfile
+from .enums import Extensions
 import os
 from .utils import *
 
@@ -50,7 +51,7 @@ class Directory(pyfile.Systorage):
         self, 
         recursively: bool = False, 
         segmentation: bool = False,
-        extensions: list[str] = []
+        extensions: list[Extensions | str] = []
     ) -> list[dict[str, list[str]]] | list[str]:
         """
         Retrieve the paths of all files contained in this directory.
@@ -68,6 +69,7 @@ class Directory(pyfile.Systorage):
             list[str] | list[dict[str, list[str]]]: 
                 A flat list of file paths, or a segmented dictionary-based list.
         """
+        extensions = convert_enum_values_to_str(extensions)
         self_files_paths = list(map(lambda x: x.get_path(), self._files if len(extensions) == 0 else filter(lambda file: file.get_extension() in extensions, self._files)))
         to_return = [{self.get_path(): self_files_paths} if segmentation else self_files_paths]
         if recursively:
@@ -79,7 +81,7 @@ class Directory(pyfile.Systorage):
         self, 
         recursively: bool = False, 
         segmentation: bool = False,
-        extensions: list[str] = []
+        extensions: list[Extensions | str] = []
     ) -> list[dict[pyfile.Directory, list[pyfile.File]]] | list[pyfile.File]:
         """
         Retrieve file objects contained in this directory.
@@ -97,6 +99,7 @@ class Directory(pyfile.Systorage):
             list[pyfile.File] | list[dict[pyfile.Directory, list[pyfile.File]]]: 
                 A flat list of File objects, or a segmented dictionary-based list.
         """
+        extensions = convert_enum_values_to_str(extensions)
         local_files_list = self._files if len(extensions) == 0 else list(filter(lambda file: file.get_extension() in extensions, self._files))
         to_return = [{self: local_files_list} if segmentation else local_files_list]
         if recursively:
