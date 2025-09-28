@@ -8,9 +8,10 @@ class Directory(pyfile.Systorage):
     """
     Class representing a directory in the filesystem.
 
-    This class extends `Systorage` and provides methods 
-    to load, list, and explore the files and subdirectories 
-    contained inside a directory.
+    This class extends `Systorage` and provides methods to load, list, 
+    and explore files and subdirectories contained in a directory. 
+    It supports optional recursive exploration and segmentation of results 
+    by directory, as well as filtering files by extensions.
     """
 
     _files: list[pyfile.File] = []
@@ -54,7 +55,7 @@ class Directory(pyfile.Systorage):
         extensions: list[Extensions | str] = []
     ) -> list[dict[str, list[str]]] | list[str]:
         """
-        Retrieve the paths of all files contained in this directory.
+        Retrieve the paths of all files contained in this directory, optionally filtered by extensions.
 
         Args:
             recursively (bool, optional): 
@@ -64,13 +65,19 @@ class Directory(pyfile.Systorage):
                 If True, groups results by directory in a dict form: 
                 {directory_path: [file_paths]}.
                 If False (default), returns a flat list of file paths.
+            extensions (list[Extensions | str], optional): 
+                List of file extensions to include (e.g., [".txt", Extensions.Code.PY]).
+                If empty (default), includes all files.
 
         Returns:
             list[str] | list[dict[str, list[str]]]: 
                 A flat list of file paths, or a segmented dictionary-based list.
         """
         extensions = convert_enum_values_to_str(extensions)
-        self_files_paths = list(map(lambda x: x.get_path(), self._files if len(extensions) == 0 else filter(lambda file: file.get_extension() in extensions, self._files)))
+        self_files_paths = list(map(
+            lambda x: x.get_path(), 
+            self._files if len(extensions) == 0 else filter(lambda file: file.get_extension() in extensions, self._files)
+        ))
         to_return = [{self.get_path(): self_files_paths} if segmentation else self_files_paths]
         if recursively:
             for dir in self._directories:
@@ -84,7 +91,7 @@ class Directory(pyfile.Systorage):
         extensions: list[Extensions | str] = []
     ) -> list[dict[pyfile.Directory, list[pyfile.File]]] | list[pyfile.File]:
         """
-        Retrieve file objects contained in this directory.
+        Retrieve file objects contained in this directory, optionally filtered by extensions.
 
         Args:
             recursively (bool, optional): 
@@ -94,6 +101,9 @@ class Directory(pyfile.Systorage):
                 If True, groups results by directory in a dict form:
                 {Directory: [File]}.
                 If False (default), returns a flat list of File objects.
+            extensions (list[Extensions | str], optional): 
+                List of file extensions to include (e.g., [".txt", Extensions.Code.PY]).
+                If empty (default), includes all files.
 
         Returns:
             list[pyfile.File] | list[dict[pyfile.Directory, list[pyfile.File]]]: 
