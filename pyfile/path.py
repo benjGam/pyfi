@@ -8,16 +8,20 @@ class Path:
     _complex: ComplexPath
 
     def __init__(self, path: str):
-        pass
+        self._literal = self.format_path(path)
+        self._complex = ComplexPath(self._literal)
 
     def format_path(self, path: str | ComplexPath) -> str:
-        pass
+        path = path.replace("\\", "/")
+        while "//" in path:
+            path.replace("//", "/")
+        return path
 
     def exists(self) -> bool:
-        pass
+        return os.path.exists(self._literal)
 
     def get_literal(self) -> str:
-        pass
+        return self._literal
 
     def get_complex(self) -> ComplexPath:
-        pass
+        return self._complex
