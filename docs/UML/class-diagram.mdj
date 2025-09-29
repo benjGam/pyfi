@@ -223,7 +223,7 @@
 											"top": 139,
 											"width": 234.517578125,
 											"height": 13,
-											"text": "+format_path(path: str | pathlib.Path): str",
+											"text": "-format_path(path: str | pathlib.Path): str",
 											"horizontalAlignment": 0
 										},
 										{
@@ -384,7 +384,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 640,
-											"top": -240,
+											"top": -304,
 											"height": 13
 										},
 										{
@@ -397,7 +397,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 533,
-											"top": 119,
+											"top": 87,
 											"width": 101.419921875,
 											"height": 13,
 											"text": "Systorage"
@@ -413,7 +413,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 640,
-											"top": -240,
+											"top": -304,
 											"width": 73.67724609375,
 											"height": 13,
 											"text": "(from Model)"
@@ -429,7 +429,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 640,
-											"top": -240,
+											"top": -304,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
@@ -438,7 +438,7 @@
 									"parentStyle": true,
 									"showShadow": false,
 									"left": 528,
-									"top": 112,
+									"top": 80,
 									"width": 111.419921875,
 									"height": 25,
 									"stereotypeLabel": {
@@ -477,7 +477,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 533,
-											"top": 142,
+											"top": 110,
 											"width": 101.419921875,
 											"height": 13,
 											"text": "-path: Path",
@@ -496,7 +496,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 533,
-											"top": 157,
+											"top": 125,
 											"width": 101.419921875,
 											"height": 13,
 											"text": "-name: str",
@@ -515,7 +515,7 @@
 											"parentStyle": true,
 											"showShadow": false,
 											"left": 533,
-											"top": 172,
+											"top": 140,
 											"width": 101.419921875,
 											"height": 13,
 											"text": "-parent: Directory",
@@ -526,7 +526,7 @@
 									"parentStyle": true,
 									"showShadow": false,
 									"left": 528,
-									"top": 137,
+									"top": 105,
 									"width": 111.419921875,
 									"height": 53
 								},
@@ -543,7 +543,7 @@
 									"parentStyle": true,
 									"showShadow": false,
 									"left": 528,
-									"top": 190,
+									"top": 158,
 									"width": 111.419921875,
 									"height": 10
 								},
@@ -561,7 +561,7 @@
 									"parentStyle": true,
 									"showShadow": false,
 									"left": 320,
-									"top": -120,
+									"top": -152,
 									"width": 10,
 									"height": 10
 								},
@@ -579,7 +579,7 @@
 									"parentStyle": true,
 									"showShadow": false,
 									"left": 320,
-									"top": -120,
+									"top": -152,
 									"width": 10,
 									"height": 10
 								}
@@ -589,7 +589,7 @@
 							"showShadow": false,
 							"containerChangeable": true,
 							"left": 528,
-							"top": 112,
+							"top": 80,
 							"width": 110.419921875,
 							"height": 88,
 							"nameCompartment": {
@@ -666,6 +666,7 @@
 								"$ref": "AAAAAAGZkz8DrK3ROC8="
 							},
 							"name": "format_path",
+							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
