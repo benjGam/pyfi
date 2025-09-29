@@ -147,7 +147,7 @@
 											"top": 150,
 											"width": 234.517578125,
 											"height": 13,
-											"text": "-_literal: str",
+											"text": "-literal: str",
 											"horizontalAlignment": 0
 										},
 										{
@@ -166,7 +166,7 @@
 											"top": 165,
 											"width": 234.517578125,
 											"height": 13,
-											"text": "-_complex: pathlib.Path",
+											"text": "-complex: pathlib.Path",
 											"horizontalAlignment": 0
 										}
 									],
@@ -8657,7 +8657,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGZkz8DrK3ROC8="
 							},
-							"name": "_literal",
+							"name": "literal",
 							"visibility": "private",
 							"type": "str"
 						},
@@ -8667,7 +8667,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGZkz8DrK3ROC8="
 							},
-							"name": "_complex",
+							"name": "complex",
 							"visibility": "private",
 							"type": "pathlib.Path"
 						}
