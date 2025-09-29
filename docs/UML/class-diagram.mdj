@@ -1260,7 +1260,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 424,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "Directory"
 										},
@@ -1301,7 +1301,7 @@
 									"showShadow": false,
 									"left": 563,
 									"top": 417,
-									"width": 425.17822265625,
+									"width": 427.3046875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGZlIskJME3eDo="
@@ -1340,7 +1340,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 447,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "-files: list<File>",
 											"horizontalAlignment": 0
@@ -1359,7 +1359,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 462,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "-directories: list<Directory>",
 											"horizontalAlignment": 0
@@ -1370,7 +1370,7 @@
 									"showShadow": false,
 									"left": 563,
 									"top": 442,
-									"width": 425.17822265625,
+									"width": 427.3046875,
 									"height": 38
 								},
 								{
@@ -1397,7 +1397,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 485,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "+init(path: str, recursive_load: bool = True)",
 											"horizontalAlignment": 0
@@ -1416,7 +1416,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 500,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "-load()",
 											"horizontalAlignment": 0
@@ -1435,7 +1435,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 515,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "+get_files(options: SearchOptions): list<SegmentedSearchResult | File>",
 											"horizontalAlignment": 0
@@ -1454,7 +1454,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 530,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "+get_files_by_extensions(options: SearchOptions): list<File>",
 											"horizontalAlignment": 0
@@ -1473,7 +1473,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 545,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "+get_files_recursively(): List<File>",
 											"horizontalAlignment": 0
@@ -1492,7 +1492,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 560,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
 											"text": "+get_directories(options: SearchOptions)",
 											"horizontalAlignment": 0
@@ -1511,9 +1511,9 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 575,
-											"width": 415.17822265625,
+											"width": 417.3046875,
 											"height": 13,
-											"text": "+get_directories_recursively(): List<Directory>",
+											"text": "+get_directories_recursively(): list<SegmentedSearchResult | Directory>",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1522,7 +1522,7 @@
 									"showShadow": false,
 									"left": 563,
 									"top": 480,
-									"width": 425.17822265625,
+									"width": 427.3046875,
 									"height": 113
 								},
 								{
@@ -1568,7 +1568,7 @@
 							"containerChangeable": true,
 							"left": 563,
 							"top": 417,
-							"width": 424.17822265625,
+							"width": 426.3046875,
 							"height": 176,
 							"nameCompartment": {
 								"$ref": "AAAAAAGZlIskJME2ZjE="
@@ -8593,6 +8593,21 @@
 							"headQualifiersCompartment": {
 								"$ref": "AAAAAAGZlOQ9WKuivMo="
 							}
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAGZlOphDoRVaD8=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"showShadow": false,
+							"left": 800,
+							"top": 288,
+							"width": 184,
+							"height": 64,
+							"text": "list<typeA | typeB> must be translated in implementation to list<typeA> | list<typeB> to improve inference"
 						}
 					]
 				},
@@ -9490,7 +9505,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGZlKA7hsIqZFo="
 									},
-									"type": "List<Directory>",
+									"type": "list<SegmentedSearchResult | Directory>",
 									"direction": "return"
 								}
 							]
