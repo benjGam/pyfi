@@ -2758,6 +2758,7 @@
 											"top": 446,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Document = Document",
 											"horizontalAlignment": 0
 										},
@@ -2777,6 +2778,7 @@
 											"top": 461,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Spreadsheet = Spreadsheet",
 											"horizontalAlignment": 0
 										},
@@ -2796,6 +2798,7 @@
 											"top": 476,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Image = Image",
 											"horizontalAlignment": 0
 										},
@@ -2815,6 +2818,7 @@
 											"top": 491,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Audio = Audio",
 											"horizontalAlignment": 0
 										},
@@ -2834,6 +2838,7 @@
 											"top": 506,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Video = Video",
 											"horizontalAlignment": 0
 										},
@@ -2853,6 +2858,7 @@
 											"top": 521,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Code = Code",
 											"horizontalAlignment": 0
 										},
@@ -2872,6 +2878,7 @@
 											"top": 536,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+Archive = Archive",
 											"horizontalAlignment": 0
 										},
@@ -2891,6 +2898,7 @@
 											"top": 551,
 											"width": 179.8134765625,
 											"height": 13,
+											"underline": true,
 											"text": "+SystemApp = SystemApp",
 											"horizontalAlignment": 0
 										}
@@ -8143,6 +8151,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Document",
+							"isStatic": true,
 							"defaultValue": "Document"
 						},
 						{
@@ -8152,6 +8161,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Spreadsheet",
+							"isStatic": true,
 							"defaultValue": "Spreadsheet"
 						},
 						{
@@ -8161,6 +8171,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Image",
+							"isStatic": true,
 							"defaultValue": "Image"
 						},
 						{
@@ -8170,6 +8181,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Audio",
+							"isStatic": true,
 							"defaultValue": "Audio"
 						},
 						{
@@ -8179,6 +8191,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Video",
+							"isStatic": true,
 							"defaultValue": "Video"
 						},
 						{
@@ -8188,6 +8201,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Code",
+							"isStatic": true,
 							"defaultValue": "Code"
 						},
 						{
@@ -8197,6 +8211,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "Archive",
+							"isStatic": true,
 							"defaultValue": "Archive"
 						},
 						{
@@ -8206,6 +8221,7 @@
 								"$ref": "AAAAAAGZlMZGTNrPG0w="
 							},
 							"name": "SystemApp",
+							"isStatic": true,
 							"defaultValue": "SystemApp"
 						}
 					],
