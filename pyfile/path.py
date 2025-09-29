@@ -12,6 +12,7 @@ class Path:
         self._complex = ComplexPath(self._literal)
 
     def format_path(self, path: str | ComplexPath) -> str:
+        path = os.path.realpath(path)  # Reassign absolute path to path
         path = path.replace("\\", "/")
         while "//" in path:
             path.replace("//", "/")
