@@ -10,7 +10,12 @@ class Systorage(ABC):
     __parent = None
 
     def __init(self, path):
+        self._update_metadata(path)
+
+    @abstractmethod
+    def _update_metadata(self, path: str):
         self.__path = Path(path)
+        self.__name = self.__path.get_complex().name
 
     def exists(self) -> bool:
         return self.__path.exists()
@@ -29,4 +34,5 @@ class Systorage(ABC):
         old_path = self.__path.get_literal()
         new_path = f"{str(self.__path.get_complex().parent())}/{new_name}"
         os.rename(self.__path._literal, new_path)
+        self._update_metadata(new_path)
         return os.path.exists(old_path) == False and os.path.exists(new_path) == True
