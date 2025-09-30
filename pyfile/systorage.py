@@ -39,8 +39,8 @@ class Systorage(ABC):
 
     def move(self, new_path: str) -> bool:
         new_path = os.path.realpath(new_path)  # Format to absolute
-        # If parent of new path do not exists
-        if not os.path.exists(os.path.dirname()):
+        # If new path do not exists
+        if not os.path.exists(new_path):
             raise Exception(f'"{new_path}" do not exists')
         old_path = self.__path.get_literal()
         os.rename(old_path, new_path)
