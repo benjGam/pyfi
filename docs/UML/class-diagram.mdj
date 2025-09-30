@@ -556,7 +556,7 @@
 											"top": 163,
 											"width": 178.3916015625,
 											"height": 13,
-											"text": "+init(literal_path)",
+											"text": "+init(path: str)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8855,8 +8855,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGZlBUs22B8euc="
 									},
-									"name": "literal_path",
-									"type": ""
+									"name": "path",
+									"type": "str"
 								}
 							]
 						},
