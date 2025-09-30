@@ -9,7 +9,7 @@ class Systorage(ABC):
     __name: str
     __parent = None
 
-    def __init(self, path):
+    def __init__(self, path):
         self._update_metadata(path)
 
     @abstractmethod
