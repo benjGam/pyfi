@@ -24,7 +24,7 @@ class Systorage(ABC):
         pass
 
     def rename(self, new_name: str) -> bool:
-        if os.path.exists(os.path.realpath(new_name)):
+        if "/" or "\\" in new_name:
             raise Exception("This method is not intended to be used as move method")
         old_path = self.__path.get_literal()
         new_path = f"{str(self.__path.get_complex().parent())}/{new_name}"
