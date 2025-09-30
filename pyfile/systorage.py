@@ -13,3 +13,11 @@ class Systorage(ABC):
 
     def exists(self) -> bool:
         return self.__path.exists()
+
+    @abstractmethod
+    def create(self) -> bool:
+        pass
+
+    @abstractmethod
+    def delete(self) -> bool:
+        pass
