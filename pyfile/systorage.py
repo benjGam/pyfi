@@ -10,3 +10,6 @@ class Systorage(ABC):
 
     def __init(self, path):
         self.__path = Path(path)
+
+    def exists(self) -> bool:
+        return self.__path.exists()
