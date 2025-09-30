@@ -46,3 +46,17 @@ class Systorage(ABC):
         os.rename(old_path, new_path)
         self._update_metadata(new_path)
         return os.path.exists(old_path) == False and os.path.exists(new_path) == True
+
+    ### Getters
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_path(self) -> str:
+        return self.__path.get_literal()
+
+    def get_parent(self) -> str:
+        return self.__parent
+
+    def get_path_object(self) -> Path:
+        return self.__path
