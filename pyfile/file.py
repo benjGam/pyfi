@@ -17,3 +17,7 @@ class File(Systorage):
     def append(self, content: str):
         with open(self.__path.get_literal(), "a") as f:
             f.write(content)
+
+    def write(self, content: str):
+        with open(self.__path.get_literal(), "w") as f:
+            f.write(content)
