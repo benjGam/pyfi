@@ -28,6 +28,10 @@ class Systorage(ABC):
     def delete(self) -> bool:
         pass
 
+    @abstractmethod
+    def get_size(self) -> int:
+        pass
+
     def rename(self, new_name: str) -> bool:
         if "/" or "\\" in new_name:
             raise Exception("This method is not intended to be used as move method")
