@@ -12,3 +12,8 @@ class Directory(Systorage):
     def create(self) -> bool:
         self.__path.get_complex().mkdir(parents=True, exist_ok=True)
         return self.exists()
+
+    def delete(self, delete_all_content: bool = False) -> bool:
+        # Implement clean each file by using self.get_files.
+        os.rmdir(self.__path.get_literal())
+        return self.exists()
