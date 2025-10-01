@@ -21,3 +21,10 @@ class File(Systorage):
     def write(self, content: str):
         with open(self.__path.get_literal(), "w") as f:
             f.write(content)
+
+    def read_to_end(self) -> str:
+        file_content: str
+        with open(self.__path.get_literal(), "r") as f:
+            f.seek(0)
+            file_content = f.read()
+        return file_content
