@@ -651,7 +651,7 @@
 											"top": 222,
 											"width": 178.3916015625,
 											"height": 13,
-											"text": "+get_size(): long",
+											"text": "+get_size(): int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -8973,7 +8973,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGZnsr/dOm5uyU="
 									},
-									"type": "long",
+									"type": "int",
 									"direction": "return"
 								}
 							],
