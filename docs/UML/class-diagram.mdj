@@ -1437,7 +1437,7 @@
 											"top": 485,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "+init(path: str, recursive_load: bool = True)",
+											"text": "+init(path: str, recursive_load: bool = False)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9839,7 +9839,7 @@
 									},
 									"name": "recursive_load",
 									"type": "bool",
-									"defaultValue": "True"
+									"defaultValue": "False"
 								}
 							]
 						},
