@@ -3,15 +3,19 @@ from ..enums.extensions import Extensions
 
 class SearchOptions:
 
-    recursion = property(lambda self: self._recursion)
-    segmentation = property(lambda self: self._segmentation)
-    extensions = property(lambda self: self._extensions)
+    recursion: bool = property(lambda self: self._recursion)
+    segmentation: bool = property(lambda self: self._segmentation)
+    extensions: list[str] = property(lambda self: self._extensions)
 
     def __init__(
+        self,
         recursion: bool = False,
         segmentation: bool = False,
         extensions: list[str | Extensions] = [],
     ):
+        self._recusion = recursion
+        self._segmentation = segmentation
+        self._extensions = self.__parse_extensions(extensions)
         pass
 
     def __parse_extensions(extensions: list[str | Extensions]) -> list[str]:
