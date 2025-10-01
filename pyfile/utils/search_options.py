@@ -3,6 +3,10 @@ from ..enums.extensions import Extensions
 
 class SearchOptions:
 
+    recursion = property(lambda self: self._recursion)
+    segmentation = property(lambda self: self._segmentation)
+    extensions = property(lambda self: self._extensions)
+
     def __init__(
         recursion: bool = False,
         segmentation: bool = False,
