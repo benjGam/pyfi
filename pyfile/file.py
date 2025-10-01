@@ -14,6 +14,15 @@ class File(Systorage):
         self.__path.get_complex().touch(exist_ok=True)
         return self.exists()
 
+    def delete(self, delete_content: bool = False) -> bool:
+        content_deleted: bool = False
+        if delete_content:
+            content_deleted = self.delete_content()
+        if delete_content and not content_deleted:
+            raise Exception("Content hasn't been deleted, file deletion aborted.")
+        os.remove(self.__path.get_literal())
+        return self.exists() == False
+
     def get_size(self) -> int:
         return os.path.getsize(self.__path.get_literal())
 
