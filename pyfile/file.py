@@ -14,6 +14,9 @@ class File(Systorage):
         self.__path.get_complex().touch(exist_ok=True)
         return self.exists()
 
+    def get_size(self) -> int:
+        return os.path.getsize(self.__path.get_literal())
+
     def append(self, content: str):
         with open(self.__path.get_literal(), "a") as f:
             f.write(content)
@@ -31,4 +34,4 @@ class File(Systorage):
 
     def delete_content(self):
         self.write("")
-        return os.path.getsize(self.__path.get_literal()) == 0
+        return self.get_size() == 0
