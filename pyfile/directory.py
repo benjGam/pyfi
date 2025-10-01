@@ -1,8 +1,13 @@
+from __future__ import annotations
 from .systorage import Systorage
+from .file import File
 import os
 
 
 class Directory(Systorage):
+
+    __files: list[File]
+    __directories: list[Directory]
 
     def __init__(self, path):
         super().__init__(path)
