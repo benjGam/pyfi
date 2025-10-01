@@ -9,7 +9,7 @@ class Directory(Systorage):
     __files: list[File]
     __directories: list[Directory]
 
-    def __init__(self, path):
+    def __init__(self, path, recursive_load: bool = False):
         super().__init__(path)
         if not os.path.isfile(path):
             raise Exception(f'"{path}" is not a folder')
