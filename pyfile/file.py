@@ -10,7 +10,7 @@ class File(Systorage):
             raise Exception(f'"{path}" is not a file')
         # Logic to bind to parent
 
-    def create(self):
+    def create(self) -> bool:
         self.__path.get_complex().touch(exist_ok=True)
         return self.exists()
 
