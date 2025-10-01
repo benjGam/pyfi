@@ -28,3 +28,7 @@ class File(Systorage):
             f.seek(0)
             file_content = f.read()
         return file_content
+
+    def delete_content(self):
+        self.write("")
+        return os.path.getsize(self.__path.get_literal()) == 0
