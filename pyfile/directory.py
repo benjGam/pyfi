@@ -63,6 +63,9 @@ class Directory(Systorage):
     def get_files(self):
         return self.__files
 
+    def get_directories(self):
+        return self.__directories
+
     def _update_metadata(self, path):
         pass
 
