@@ -53,3 +53,12 @@ class Directory(Systorage):
         # Implement clean each file by using self.get_files.
         os.rmdir(super().get_path_object().get_literal())
         return self.exists()
+
+    def get_files(self):
+        return self.__files
+
+    def _update_metadata(self, path):
+        pass
+
+    def get_size(self):
+        pass
