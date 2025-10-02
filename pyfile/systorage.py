@@ -63,8 +63,8 @@ class Systorage(ABC):
     def get_parent(self):
         from .directory import Directory
 
-        if self.__parent == None:
-            self.__parent = Directory(os.path.dirname())
+        if self.__parent is None:
+            self.__parent = Directory(os.path.dirname(self.__path.get_literal()))
         return self.__parent
 
     def get_path_object(self) -> Path:
