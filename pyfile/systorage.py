@@ -59,7 +59,12 @@ class Systorage(ABC):
     def get_path(self) -> str:
         return self.__path.get_literal()
 
-    def get_parent(self) -> str:
+    def get_parent(self):
+        from .directory import Directory
+
+        if self.__parent == None:
+            self.__parent = Directory(os.path.dirname())
+            self.__parent.create()
         return self.__parent
 
     def get_path_object(self) -> Path:
