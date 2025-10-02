@@ -9,6 +9,8 @@ class Directory(Systorage):
     __files: list[File]
     __directories: list[Directory]
 
+    ### Implement logic for handling correctly 'recursive_load'
+
     def __init__(self, path: str, recursive_load: bool = False):
         super().__init__(path)
         if os.path.exists(path) and not os.path.isdir(path):
