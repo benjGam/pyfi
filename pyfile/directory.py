@@ -14,16 +14,20 @@ class Directory(Systorage):
         if not os.path.isfile(path):
             raise Exception(f'"{path}" is not a folder')
 
-    def __bind_files_parent(self):
+    def __get_sub_paths(self) -> list[str]:
+        return self.__path.get_complex().glob("*")
+
+    def __bind_as_parent(self):
         for file in self.__files:
             file.__parent = self
+        for directory in self.__directories:
+            directory.__parent = self
 
     def __load(self, recursive_load: bool):
-        complex_path = self.__path.get_complex()
-        child_paths = complex_path.glob("*")
+        child_paths = self.__get_sub_paths()
         self.__files = list(filter(lambda path: os.path.isfile(path), child_paths))
-        self.__bind_files_parent()
         self.__directories = list(filter(lambda path: os.path.isdir(path), child_paths))
+        self.__bind_as_parent()
         if recursive_load:
             for directory in self.__directories:
                 directory.__load(recursive_load)
