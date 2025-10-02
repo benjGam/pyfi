@@ -5,21 +5,21 @@ import os
 
 class Systorage(ABC):
 
-    __path: Path
-    __name: str
-    __parent = None
+    _path: Path
+    _name: str
+    _parent = None
 
     def __init__(self, path):
-        self.__path = Path(path)
-        self.__name = self.__path.get_complex().name
+        self._path = Path(path)
+        self.__name = self._path.get_complex().name
 
     @abstractmethod
     def _update_metadata(self, path: str):
-        self.__path = Path(path)
-        self.__name = self.__path.get_complex().name
+        self._path = Path(path)
+        self.__name = self._path.get_complex().name
 
     def exists(self) -> bool:
-        return self.__path.exists()
+        return self._path.exists()
 
     @abstractmethod
     def create(self) -> bool:
@@ -36,9 +36,9 @@ class Systorage(ABC):
     def rename(self, new_name: str) -> bool:
         if "/" or "\\" in new_name:
             raise Exception("This method is not intended to be used as move method")
-        old_path = self.__path.get_literal()
-        new_path = f"{str(self.__path.get_complex().parent())}/{new_name}"
-        os.rename(self.__path._literal, new_path)
+        old_path = self._path.get_literal()
+        new_path = f"{str(self._path.get_complex().parent())}/{new_name}"
+        os.rename(self._path._literal, new_path)
         self._update_metadata(new_path)
         return os.path.exists(old_path) == False and os.path.exists(new_path) == True
 
@@ -47,7 +47,7 @@ class Systorage(ABC):
         # If new path do not exists
         if not os.path.exists(new_path):
             raise Exception(f'"{new_path}" do not exists')
-        old_path = self.__path.get_literal()
+        old_path = self._path.get_literal()
         os.rename(old_path, new_path)
         self._update_metadata(new_path)
         return os.path.exists(old_path) == False and os.path.exists(new_path) == True
@@ -58,14 +58,14 @@ class Systorage(ABC):
         return self.__name
 
     def get_path(self) -> str:
-        return self.__path.get_literal()
+        return self._path.get_literal()
 
     def get_parent(self):
         from .directory import Directory
 
-        if self.__parent is None:
-            self.__parent = Directory(os.path.dirname(self.__path.get_literal()))
-        return self.__parent
+        if self._parent is None:
+            self._parent = Directory(os.path.dirname(self._path.get_literal()))
+        return self._parent
 
     def get_path_object(self) -> Path:
-        return self.__path
+        return self._path
