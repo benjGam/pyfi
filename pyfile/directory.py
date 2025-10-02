@@ -13,6 +13,7 @@ class Directory(Systorage):
         super().__init__(path)
         if os.path.exists(path) and not os.path.isdir(path):
             raise Exception(f'"{path}" is not a folder')
+        self.__load(recursive_load)
 
     def __get_sub_paths(self) -> list[str]:
         return super().get_path_object().get_complex().glob("*")
