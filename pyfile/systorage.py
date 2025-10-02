@@ -10,7 +10,8 @@ class Systorage(ABC):
     __parent = None
 
     def __init__(self, path):
-        self._update_metadata(path)
+        self.__path = Path(path)
+        self.__name = self.__path.get_complex().name
 
     @abstractmethod
     def _update_metadata(self, path: str):
