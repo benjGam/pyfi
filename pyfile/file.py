@@ -6,7 +6,7 @@ class File(Systorage):
 
     def __init__(self, path: str):
         super().__init__(path)
-        if not os.path.isfile(path):
+        if os.path.exists(path) and not os.path.isfile(path):
             raise Exception(f'"{path}" is not a file')
         # Logic to bind to parent
 
