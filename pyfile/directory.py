@@ -16,7 +16,12 @@ class Directory(Systorage):
         self.__load(recursive_load)
 
     def __get_sub_paths(self) -> list[str]:
-        return super().get_path_object().get_complex().glob("*")
+        return list(
+            map(
+                lambda path: str(path),
+                super().get_path_object().get_complex().glob("*"),
+            )
+        )
 
     def __bind_as_parent(self):
         for file in self.__files:
