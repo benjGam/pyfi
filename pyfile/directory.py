@@ -20,9 +20,9 @@ class Directory(Systorage):
 
     def __bind_as_parent(self):
         for file in self.__files:
-            file.__parent = self
+            file._parent = self
         for directory in self.__directories:
-            directory.__parent = self
+            directory._parent = self
 
     def __load_files(self, paths: list[str]):
         self.__files = list(
