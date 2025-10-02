@@ -15,7 +15,7 @@ class Directory(Systorage):
             raise Exception(f'"{path}" is not a folder')
 
     def __get_sub_paths(self) -> list[str]:
-        return self.__path.get_complex().glob("*")
+        return super().get_path_object().get_complex().glob("*")
 
     def __bind_as_parent(self):
         for file in self.__files:
@@ -46,10 +46,10 @@ class Directory(Systorage):
         self.__bind_as_parent()
 
     def create(self) -> bool:
-        self.__path.get_complex().mkdir(parents=True, exist_ok=True)
+        super().get_path_object().get_complex().mkdir(parents=True, exist_ok=True)
         return self.exists()
 
     def delete(self, delete_all_content: bool = False) -> bool:
         # Implement clean each file by using self.get_files.
-        os.rmdir(self.__path.get_literal())
+        os.rmdir(super().get_path_object().get_literal())
         return self.exists()
