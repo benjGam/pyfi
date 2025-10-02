@@ -1513,7 +1513,7 @@
 											"top": 520,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "-load_directories(paths: list<str>)",
+											"text": "-load_directories(paths: list<str>, recursive_load: bool)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10015,6 +10015,15 @@
 									},
 									"name": "paths",
 									"type": "list<str>"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGZpPHmxjxOuac=",
+									"_parent": {
+										"$ref": "AAAAAAGZpM75axa/mQ8="
+									},
+									"name": "recursive_load",
+									"type": "bool"
 								}
 							]
 						},
