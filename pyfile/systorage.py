@@ -64,7 +64,6 @@ class Systorage(ABC):
 
         if self.__parent == None:
             self.__parent = Directory(os.path.dirname())
-            self.__parent.create()
         return self.__parent
 
     def get_path_object(self) -> Path:
