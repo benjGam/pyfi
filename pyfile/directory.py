@@ -31,10 +31,10 @@ class Directory(Systorage):
             )
         )
 
-    def __load_directories(self, paths: list[str]):
+    def __load_directories(self, paths: list[str], recursive_load: bool):
         self.__directories = list(
             map(
-                lambda file_path: Directory(file_path),
+                lambda folder_path: Directory(folder_path, recursive_load),
                 filter(lambda path: os.path.isdir(path), paths),
             )
         )
@@ -42,11 +42,8 @@ class Directory(Systorage):
     def __load(self, recursive_load: bool):
         child_paths = self.__get_sub_paths()
         self.__load_files(child_paths)
-        self.__load_directories(child_paths)
+        self.__load_directories(child_paths, recursive_load)
         self.__bind_as_parent()
-        if recursive_load:
-            for directory in self.__directories:
-                directory.__load(recursive_load)
 
     def create(self) -> bool:
         self.__path.get_complex().mkdir(parents=True, exist_ok=True)
