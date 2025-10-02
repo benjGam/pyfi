@@ -11,7 +11,7 @@ class Directory(Systorage):
 
     def __init__(self, path, recursive_load: bool = False):
         super().__init__(path)
-        if not os.path.isfile(path):
+        if os.path.exists(path) and not os.path.isdir(path):
             raise Exception(f'"{path}" is not a folder')
 
     def __get_sub_paths(self) -> list[str]:
