@@ -45,5 +45,9 @@ class File(Systorage):
         self.write("")
         return self.get_size() == 0
 
+    def get_extension(self):
+        path = self.get_path()
+        return path[path.rfind(".") : len(path)]
+
     def _update_metadata(self, path):
         pass
