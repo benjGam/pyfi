@@ -1437,7 +1437,7 @@
 											"top": 460,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "+init(path: str, recursive_load: bool = False)",
+											"text": "+init(path: str, auto_load: bool = True, recursive_load: bool = False)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1513,7 +1513,7 @@
 											"top": 520,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "-load_directories(paths: list<str>, recursive_load: bool)",
+											"text": "-load_directories(paths: list<str>, auto_load: bool, recursive_load: bool)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1532,7 +1532,7 @@
 											"top": 535,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "-load(recursive_load: bool)",
+											"text": "-load(autoload: bool, recursive_load: bool)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9943,6 +9943,16 @@
 									"_parent": {
 										"$ref": "AAAAAAGZlJGiP8GCHgE="
 									},
+									"name": "auto_load",
+									"type": "bool",
+									"defaultValue": "True"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGZsOky3f5KTJU=",
+									"_parent": {
+										"$ref": "AAAAAAGZlJGiP8GCHgE="
+									},
 									"name": "recursive_load",
 									"type": "bool",
 									"defaultValue": "False"
@@ -10022,6 +10032,15 @@
 									"_parent": {
 										"$ref": "AAAAAAGZpM75axa/mQ8="
 									},
+									"name": "auto_load",
+									"type": "bool"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGZsOnWRgkJvAI=",
+									"_parent": {
+										"$ref": "AAAAAAGZpM75axa/mQ8="
+									},
 									"name": "recursive_load",
 									"type": "bool"
 								}
@@ -10039,6 +10058,15 @@
 								{
 									"_type": "UMLParameter",
 									"_id": "AAAAAAGZn5RvroKv1vA=",
+									"_parent": {
+										"$ref": "AAAAAAGZlKDJJ8Iz+ss="
+									},
+									"name": "autoload",
+									"type": "bool"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGZsOloKwPAU88=",
 									"_parent": {
 										"$ref": "AAAAAAGZlKDJJ8Iz+ss="
 									},
