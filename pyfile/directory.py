@@ -6,16 +6,17 @@ import os
 
 class Directory(Systorage):
 
-    __files: list[File]
-    __directories: list[Directory]
+    __files: list[File] = []
+    __directories: list[Directory] = []
 
     ### Implement logic for handling correctly 'recursive_load'
 
-    def __init__(self, path: str, recursive_load: bool = False):
+    def __init__(self, path: str, auto_load: bool = True, recursive_load: bool = False):
         super().__init__(path)
         if os.path.exists(path) and not os.path.isdir(path):
             raise Exception(f'"{path}" is not a folder')
-        self.__load(recursive_load)
+        if auto_load:
+            self.load(auto_load, recursive_load)
 
     def __get_sub_paths(self) -> list[str]:
         return list(
@@ -39,18 +40,21 @@ class Directory(Systorage):
             )
         )
 
-    def __load_directories(self, paths: list[str], recursive_load: bool):
+    def __load_directories(
+        self, paths: list[str], auto_load: bool, recursive_load: bool
+    ):
         self.__directories = list(
             map(
-                lambda folder_path: Directory(folder_path, recursive_load),
+                lambda folder_path: Directory(folder_path, auto_load, recursive_load),
                 filter(lambda path: os.path.isdir(path), paths),
             )
         )
 
-    def __load(self, recursive_load: bool):
+    def load(self, auto_load: bool, recursive_load: bool):
         child_paths = self.__get_sub_paths()
         self.__load_files(child_paths)
-        self.__load_directories(child_paths, recursive_load)
+        if recursive_load:
+            self.__load_directories(child_paths, auto_load, recursive_load)
         self.__bind_as_parent()
 
     def create(self) -> bool:
