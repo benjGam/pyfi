@@ -1,12 +1,12 @@
 from __future__ import annotations
 from .systorage import Systorage
-from .file import File
 import os
+import pyfile
 
 
 class Directory(Systorage):
 
-    __files: list[File] = []
+    __files: list[pyfile.File] = []
     __directories: list[Directory] = []
 
     ### Implement logic for handling correctly 'recursive_load'
@@ -35,7 +35,7 @@ class Directory(Systorage):
     def __load_files(self, paths: list[str]):
         self.__files = list(
             map(
-                lambda file_path: File(file_path),
+                lambda file_path: pyfile.File(file_path),
                 filter(lambda path: os.path.isfile(path), paths),
             )
         )
@@ -65,6 +65,16 @@ class Directory(Systorage):
         # Implement clean each file by using self.get_files.
         os.rmdir(super().get_path_object().get_literal())
         return self.exists()
+
+    def __get_files_by_extensions(
+        self, options: pyfile.SearchOptions
+    ) -> list[pyfile.File]:
+
+        return list(
+            filter(
+                lambda file: file.get_extension() in options.extensions, self.__files
+            )
+        )
 
     def get_files(self):
         return self.__files
