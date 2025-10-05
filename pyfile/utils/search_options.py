@@ -18,5 +18,5 @@ class SearchOptions:
         self._extensions = self.__parse_extensions(extensions)
         pass
 
-    def __parse_extensions(extensions: list[str | Extensions]) -> list[str]:
+    def __parse_extensions(self, extensions: list[str | Extensions]) -> list[str]:
         return [x.value if type(x) != str else x for x in extensions]
