@@ -110,8 +110,17 @@ class Directory(Systorage):
             to_return.extend(directory.__get_directories_recursively())
         return to_return
 
-    def get_directories(self):
-        return self.__directories
+    def get_directories(
+        self, options: pyfile.SearchOptions
+    ) -> list[Directory] | list[pyfile.SegmentedSearchResult]:
+        directory_list = self.__directories
+        if options.recursion:
+            directory_list = self.__get_directories_recursively()
+        return (
+            self.__group_by_parent(directory_list)
+            if options.segmentation
+            else directory_list
+        )
 
     def _update_metadata(self, path):
         pass
