@@ -67,13 +67,11 @@ class Directory(Systorage):
         return self.exists()
 
     def __get_files_by_extensions(
-        self, options: pyfile.SearchOptions
+        self, file_list: list[pyfile.File], options: pyfile.SearchOptions
     ) -> list[pyfile.File]:
 
         return list(
-            filter(
-                lambda file: file.get_extension() in options.extensions, self.__files
-            )
+            filter(lambda file: file.get_extension() in options.extensions, file_list)
         )
 
     def get_files(self):
