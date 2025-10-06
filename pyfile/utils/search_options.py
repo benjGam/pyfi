@@ -13,7 +13,7 @@ class SearchOptions:
         segmentation: bool = False,
         extensions: list[str | Extensions] = [],
     ):
-        self._recusion = recursion
+        self._recursion = recursion
         self._segmentation = segmentation
         self._extensions = self.__parse_extensions(extensions)
         pass
