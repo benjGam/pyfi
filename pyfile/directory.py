@@ -1,194 +1,154 @@
 from __future__ import annotations
-import pyfile
-from .enums import Extensions
+from .systorage import Systorage
 import os
-from .utils import *
+import pyfile
 
 
-class Directory(pyfile.Systorage):
-    """
-    Class representing a directory in the filesystem.
+class Directory(Systorage):
 
-    This class extends `Systorage` and provides methods to load, list,
-    and explore files and subdirectories contained in a directory.
-    It supports optional recursive exploration and segmentation of results
-    by directory, as well as filtering files by extensions.
-    """
+    __files: list[pyfile.File] = []
+    __directories: list[Directory] = []
 
-    _files: list[pyfile.File] = []
-    _directories: list[Directory] = []
+    ### Implement logic for handling correctly 'recursive_load'
 
-    def __init__(self, path: str, auto_load: bool = False):
-        """
-        Initialize a Directory object with the given path.
-
-        Args:
-            path (str): Absolute or relative path to the directory.
-            auto_load (bool, optional): If True, automatically loads files
-                                        and subdirectories at initialization.
-                                        Defaults to False.
-
-        Raises:
-            Exception: If the path exists but is not a directory.
-        """
+    def __init__(self, path: str, auto_load: bool = True, recursive_load: bool = False):
         super().__init__(path)
-        if self.exists() and not os.path.isdir(path):
-            raise Exception(f'"{path}" is not a folder.')
+        if os.path.exists(path) and not os.path.isdir(path):
+            raise Exception(f'"{path}" is not a folder')
         if auto_load:
-            self.load(True)
+            self.load(auto_load, recursive_load)
 
-    def load(self, recursive_load: bool = False) -> None:
-        """
-        Load files and subdirectories contained in this directory.
+    def __get_sub_paths(self) -> list[str]:
+        return list(
+            map(
+                lambda path: str(path),
+                super().get_path_object().get_complex().glob("*"),
+            )
+        )
 
-        Args:
-            recursive_load (bool, optional):
-                If True, also loads all subdirectories recursively.
-                Defaults to False.
-        """
-        self._files = pyfile.Path(self.get_path()).get_files()
-        self._directories = pyfile.Path(self.get_path()).get_directories(recursive_load)
+    def __bind_as_parent(self):
+        for file in self.__files:
+            file._parent = self
+        for directory in self.__directories:
+            directory._parent = self
+
+    def __load_files(self, paths: list[str]):
+        self.__files = list(
+            map(
+                lambda file_path: pyfile.File(file_path),
+                filter(lambda path: os.path.isfile(path), paths),
+            )
+        )
+
+    def __load_directories(
+        self, paths: list[str], auto_load: bool, recursive_load: bool
+    ):
+        self.__directories = list(
+            map(
+                lambda folder_path: Directory(folder_path, auto_load, recursive_load),
+                filter(lambda path: os.path.isdir(path), paths),
+            )
+        )
+
+    def load(self, auto_load: bool, recursive_load: bool):
+        child_paths = self.__get_sub_paths()
+        self.__load_files(child_paths)
+        if recursive_load:
+            self.__load_directories(child_paths, auto_load, recursive_load)
+        self.__bind_as_parent()
+
+    def __group_by_parent(
+        self, elem_list: list[pyfile.File] | list[Directory]
+    ) -> list[pyfile.SegmentedSearchResult]:
+        segmented_elem_list: list[pyfile.SegmentedSearchResult] = []
+
+        for elem in elem_list:
+            parent = elem.get_parent()
+            existing_segment = next(
+                (seg for seg in segmented_elem_list if seg.parent == parent), None
+            )
+            if existing_segment:
+                if elem not in existing_segment.childs:
+                    existing_segment.childs.append(elem)
+            else:
+                segmented_elem_list.append(pyfile.SegmentedSearchResult(parent, [elem]))
+        return segmented_elem_list
 
     def get_files_paths(
-        self,
-        recursively: bool = False,
-        segmentation: bool = False,
-        extensions: list[Extensions | str] = [],
-    ) -> list[dict[str, list[str]]] | list[str]:
-        """
-        Retrieve the paths of all files contained in this directory, optionally filtered by extensions.
-
-        Args:
-            recursively (bool, optional):
-                If True, includes files from subdirectories recursively.
-                Defaults to False.
-            segmentation (bool, optional):
-                If True, groups results by directory in a dict form:
-                {directory_path: [file_paths]}.
-                If False (default), returns a flat list of file paths.
-            extensions (list[Extensions | str], optional):
-                List of file extensions to include (e.g., [".txt", Extensions.Code.PY]).
-                If empty (default), includes all files.
-
-        Returns:
-            list[str] | list[dict[str, list[str]]]:
-                A flat list of file paths, or a segmented dictionary-based list.
-        """
-        extensions = convert_enum_values_to_str(extensions)
-        self_files_paths = list(
+        self, options: pyfile.SearchOptions
+    ) -> list[str] | list[dict[str, list[str]]]:
+        return list(
             map(
-                lambda x: x.get_path(),
-                (
-                    self._files
-                    if len(extensions) == 0
-                    else filter(
-                        lambda file: file.get_extension() in extensions, self._files
-                    )
+                lambda result: (
+                    result.to_paths() if options.segmentation else result.get_path()
                 ),
+                self.get_files(options),
             )
         )
-        to_return = [
-            {self.get_path(): self_files_paths} if segmentation else self_files_paths
-        ]
-        if recursively:
-            for dir in self._directories:
-                to_return.append(
-                    dir.get_files_paths(recursively, segmentation, extensions)
-                )
-        return flatten(to_return)
 
     def get_files(
-        self,
-        recursively: bool = False,
-        segmentation: bool = False,
-        extensions: list[Extensions | str] = [],
-    ) -> list[dict[pyfile.Directory, list[pyfile.File]]] | list[pyfile.File]:
-        """
-        Retrieve file objects contained in this directory, optionally filtered by extensions.
+        self, options: pyfile.SearchOptions
+    ) -> list[pyfile.SegmentedSearchResult] | list[pyfile.File]:
+        file_list = self.__files
+        if options.recursion:
+            file_list = self.__get_files_recursively()
+        if len(options.extensions) > 0:
+            file_list = self.__get_files_by_extensions(file_list, options.extensions)
+        return self.__group_by_parent(file_list) if options.segmentation else file_list
 
-        Args:
-            recursively (bool, optional):
-                If True, includes files from subdirectories recursively.
-                Defaults to False.
-            segmentation (bool, optional):
-                If True, groups results by directory in a dict form:
-                {Directory: [File]}.
-                If False (default), returns a flat list of File objects.
-            extensions (list[Extensions | str], optional):
-                List of file extensions to include (e.g., [".txt", Extensions.Code.PY]).
-                If empty (default), includes all files.
+    def __get_files_by_extensions(
+        self, file_list: list[pyfile.File], extensions: list[str]
+    ) -> list[pyfile.File]:
 
-        Returns:
-            list[pyfile.File] | list[dict[pyfile.Directory, list[pyfile.File]]]:
-                A flat list of File objects, or a segmented dictionary-based list.
-        """
-        extensions = convert_enum_values_to_str(extensions)
-        local_files_list = (
-            self._files
-            if len(extensions) == 0
-            else list(
-                filter(lambda file: file.get_extension() in extensions, self._files)
-            )
-        )
-        to_return = [{self: local_files_list} if segmentation else local_files_list]
-        if recursively:
-            for dir in self._directories:
-                to_return.append(dir.get_files(recursively, segmentation, extensions))
-        return flatten(to_return)
+        return list(filter(lambda file: file.get_extension() in extensions, file_list))
+
+    def __get_files_recursively(self) -> list[pyfile.File]:
+        to_return = self.__files
+        for directory in self.__directories:
+            to_return.extend(directory.__get_files_recursively())
+        return to_return
 
     def get_directories_paths(
-        self, recursively: bool = False, segmentation: bool = False
-    ) -> list[dict[str, list[str]]] | list[str]:
-        """
-        Retrieve the paths of all subdirectories contained in this directory.
-
-        Args:
-            recursively (bool, optional):
-                If True, includes subdirectories of all nested directories recursively.
-                Defaults to False.
-            segmentation (bool, optional):
-                If True, groups results by directory in a dict form:
-                {directory_path: [subdirectory_paths]}.
-                If False (default), returns a flat list of subdirectory paths.
-
-        Returns:
-            list[str] | list[dict[str, list[str]]]:
-                A flat list of subdirectory paths, or a segmented dictionary-based list.
-        """
-        self_directories_paths = list(map(lambda x: x.get_path(), self._directories))
-        to_return = [
-            (
-                {self.get_path(): self_directories_paths}
-                if segmentation
-                else self_directories_paths
+        self, options: pyfile.SearchOptions
+    ) -> list[str] | list[dict[str, list[str]]]:
+        return list(
+            map(
+                lambda result: (
+                    result.to_paths() if options.segmentation else result.get_path()
+                ),
+                self.get_directories(options),
             )
-        ]
-        if recursively:
-            for dir in self._directories:
-                to_return.append(dir.get_directories_paths(recursively, segmentation))
-        return flatten(to_return)
+        )
 
     def get_directories(
-        self, recursively: bool = False, segmentation: bool = False
-    ) -> list[dict[pyfile.Directory, list[pyfile.Directory]]] | list[pyfile.Directory]:
-        """
-        Retrieve subdirectory objects contained in this directory.
+        self, options: pyfile.SearchOptions
+    ) -> list[Directory] | list[pyfile.SegmentedSearchResult]:
+        directory_list = self.__directories
+        if options.recursion:
+            directory_list = self.__get_directories_recursively()
+        return (
+            self.__group_by_parent(directory_list)
+            if options.segmentation
+            else directory_list
+        )
 
-        Args:
-            recursively (bool, optional):
-                If True, includes subdirectories of all nested directories recursively.
-                Defaults to False.
-            segmentation (bool, optional):
-                If True, groups results by directory in a dict form:
-                {Directory: [subdirectories]}.
-                If False (default), returns a flat list of Directory objects.
+    def __get_directories_recursively(self) -> list[Directory]:
+        to_return = self.__directories
+        for directory in self.__directories:
+            to_return.extend(directory.__get_directories_recursively())
+        return to_return
 
-        Returns:
-            list[pyfile.Directory] | list[dict[pyfile.Directory, list[pyfile.Directory]]]:
-                A flat list of Directory objects, or a segmented dictionary-based list.
-        """
-        to_return = [{self: self._directories} if segmentation else self._directories]
-        if recursively:
-            for dir in self._directories:
-                to_return.append(dir.get_directories(recursively, segmentation))
-        return flatten(to_return)
+    def create(self) -> bool:
+        super().get_path_object().get_complex().mkdir(parents=True, exist_ok=True)
+        return self.exists()
+
+    def delete(self, delete_all_content: bool = False) -> bool:
+        # Implement clean each file by using self.get_files.
+        os.rmdir(super().get_path_object().get_literal())
+        return self.exists()
+
+    def _update_metadata(self, path):
+        pass
+
+    def get_size(self):
+        pass

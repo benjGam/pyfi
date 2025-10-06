@@ -1,74 +1,71 @@
-from pathlib import Path as plPath
-import pyfile.path as PiFilePath
+from abc import ABC, abstractmethod
+from .path import Path
+import os
 
 
-class Systorage:
-    """
-    Base class representing a storage element in the filesystem.
+class Systorage(ABC):
 
-    This class serves as a foundation for filesystem-related objects
-    (such as files or directories). It wraps around a custom `Path` object
-    and provides access to metadata such as the element's name, parent name,
-    and path, along with utilities to check for its existence.
-    """
+    _path: Path
+    _name: str
+    _parent = None
 
-    _path: PiFilePath.Path
-    _parent_name: str
-    _self_name: str
+    def __init__(self, path):
+        self._path = Path(path)
+        self.__name = self._path.get_complex().name
 
-    def __init__(self, path: str):
-        """
-        Initialize a Systorage object with the given path.
-
-        Args:
-            path (str): Absolute or relative path to the storage element.
-        """
-        self._path = PiFilePath.Path(path)
-        self._parent_name = self._path.get_parent_name()
-        self._name = self._path.get_name()
+    @abstractmethod
+    def _update_metadata(self, path: str):
+        self._path = Path(path)
+        self.__name = self._path.get_complex().name
 
     def exists(self) -> bool:
-        """
-        Check whether the storage element exists in the filesystem.
+        return self._path.exists()
 
-        Returns:
-            bool: True if the element exists, False otherwise.
-        """
-        return self.get_path_object().exists()
+    @abstractmethod
+    def create(self) -> bool:
+        pass
 
-    # Getters
+    @abstractmethod
+    def delete(self) -> bool:
+        pass
+
+    @abstractmethod
+    def get_size(self) -> int:
+        pass
+
+    def rename(self, new_name: str) -> bool:
+        if "/" or "\\" in new_name:
+            raise Exception("This method is not intended to be used as move method")
+        old_path = self._path.get_literal()
+        new_path = f"{str(self._path.get_complex().parent())}/{new_name}"
+        os.rename(self._path._literal, new_path)
+        self._update_metadata(new_path)
+        return os.path.exists(old_path) == False and os.path.exists(new_path) == True
+
+    def move(self, new_path: str) -> bool:
+        new_path = os.path.realpath(new_path)  # Format to absolute
+        # If new path do not exists
+        if not os.path.exists(new_path):
+            raise Exception(f'"{new_path}" do not exists')
+        old_path = self._path.get_literal()
+        os.rename(old_path, new_path)
+        self._update_metadata(new_path)
+        return os.path.exists(old_path) == False and os.path.exists(new_path) == True
+
+    ### Getters
+
     def get_name(self) -> str:
-        """
-        Get the name of the storage element (without parent path).
-
-        Returns:
-            str: Name of the element (e.g. "file.txt").
-        """
-        return self._name
-
-    def get_parent_name(self) -> str:
-        """
-        Get the name of the parent directory of the storage element.
-
-        Returns:
-            str: Name of the parent directory.
-        """
-        return self._parent_name
+        return self.__name
 
     def get_path(self) -> str:
-        """
-        Get the full literal path to the storage element.
-
-        Returns:
-            str: Path as a string.
-        """
         return self._path.get_literal()
 
-    def get_path_object(self) -> plPath:
-        """
-        Get the internal `pathlib.Path` object representing this element.
+    def get_parent(self):
+        from .directory import Directory
 
-        Returns:
-            pathlib.Path: Path object for advanced operations.
-        """
-        return self._path.get_internal()
+        if self._parent is None:
+            self._parent = Directory(os.path.dirname(self._path.get_literal()))
+        return self._parent
+
+    def get_path_object(self) -> Path:
+        return self._path
