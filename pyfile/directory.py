@@ -74,6 +74,18 @@ class Directory(Systorage):
                 segmented_elem_list.append(pyfile.SegmentedSearchResult(parent, [elem]))
         return segmented_elem_list
 
+    def get_files_paths(
+        self, options: pyfile.SearchOptions
+    ) -> list[str] | list[dict[str, list[str]]]:
+        return list(
+            map(
+                lambda result: (
+                    result.to_paths() if options.segmentation else result.get_path()
+                ),
+                self.get_files(options),
+            )
+        )
+
     def get_files(
         self, options: pyfile.SearchOptions
     ) -> list[pyfile.SegmentedSearchResult] | list[pyfile.File]:
