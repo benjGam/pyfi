@@ -1665,7 +1665,7 @@
 											"top": 617,
 											"width": 468.25732421875,
 											"height": 13,
-											"text": "+get_directories_recursively(): list<SegmentedSearchResult | Directory>",
+											"text": "-get_directories_recursively(): list<SegmentedSearchResult | Directory>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10273,6 +10273,7 @@
 								"$ref": "AAAAAAGZlIskI8EzGMQ="
 							},
 							"name": "get_directories_recursively",
+							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",

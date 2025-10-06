@@ -57,27 +57,6 @@ class Directory(Systorage):
             self.__load_directories(child_paths, auto_load, recursive_load)
         self.__bind_as_parent()
 
-    def create(self) -> bool:
-        super().get_path_object().get_complex().mkdir(parents=True, exist_ok=True)
-        return self.exists()
-
-    def delete(self, delete_all_content: bool = False) -> bool:
-        # Implement clean each file by using self.get_files.
-        os.rmdir(super().get_path_object().get_literal())
-        return self.exists()
-
-    def __get_files_by_extensions(
-        self, file_list: list[pyfile.File], extensions: list[str]
-    ) -> list[pyfile.File]:
-
-        return list(filter(lambda file: file.get_extension() in extensions, file_list))
-
-    def __get_files_recursively(self) -> list[pyfile.File]:
-        to_return = self.__files
-        for directory in self.__directories:
-            to_return.extend(directory.__get_files_recursively())
-        return to_return
-
     def __group_by_parent(
         self, elem_list: list[pyfile.File] | list[Directory]
     ) -> list[pyfile.SegmentedSearchResult]:
@@ -104,10 +83,16 @@ class Directory(Systorage):
             file_list = self.__get_files_by_extensions(file_list, options.extensions)
         return self.__group_by_parent(file_list) if options.segmentation else file_list
 
-    def __get_directories_recursively(self) -> list[Directory]:
-        to_return = self.__directories
+    def __get_files_by_extensions(
+        self, file_list: list[pyfile.File], extensions: list[str]
+    ) -> list[pyfile.File]:
+
+        return list(filter(lambda file: file.get_extension() in extensions, file_list))
+
+    def __get_files_recursively(self) -> list[pyfile.File]:
+        to_return = self.__files
         for directory in self.__directories:
-            to_return.extend(directory.__get_directories_recursively())
+            to_return.extend(directory.__get_files_recursively())
         return to_return
 
     def get_directories(
@@ -121,6 +106,21 @@ class Directory(Systorage):
             if options.segmentation
             else directory_list
         )
+
+    def __get_directories_recursively(self) -> list[Directory]:
+        to_return = self.__directories
+        for directory in self.__directories:
+            to_return.extend(directory.__get_directories_recursively())
+        return to_return
+
+    def create(self) -> bool:
+        super().get_path_object().get_complex().mkdir(parents=True, exist_ok=True)
+        return self.exists()
+
+    def delete(self, delete_all_content: bool = False) -> bool:
+        # Implement clean each file by using self.get_files.
+        os.rmdir(super().get_path_object().get_literal())
+        return self.exists()
 
     def _update_metadata(self, path):
         pass
