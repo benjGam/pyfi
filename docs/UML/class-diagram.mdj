@@ -1317,7 +1317,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 399,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "Directory"
 										},
@@ -1358,7 +1358,7 @@
 									"showShadow": false,
 									"left": 563,
 									"top": 392,
-									"width": 463.32763671875,
+									"width": 443.07861328125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGZlIskJME3eDo="
@@ -1397,7 +1397,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 422,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-files: list<File>",
 											"horizontalAlignment": 0
@@ -1416,7 +1416,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 437,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-directories: list<Directory>",
 											"horizontalAlignment": 0
@@ -1427,7 +1427,7 @@
 									"showShadow": false,
 									"left": 563,
 									"top": 417,
-									"width": 463.32763671875,
+									"width": 443.07861328125,
 									"height": 38
 								},
 								{
@@ -1454,7 +1454,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 460,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "+init(path: str, auto_load: bool = True, recursive_load: bool = False)",
 											"horizontalAlignment": 0
@@ -1473,7 +1473,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 475,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-get_sub_paths(): list<str>",
 											"horizontalAlignment": 0
@@ -1492,7 +1492,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 490,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-bind_as_parent()",
 											"horizontalAlignment": 0
@@ -1511,7 +1511,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 505,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-load_files(paths: list<str>)",
 											"horizontalAlignment": 0
@@ -1530,7 +1530,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 520,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-load_directories(paths: list<str>, auto_load: bool, recursive_load: bool)",
 											"horizontalAlignment": 0
@@ -1549,7 +1549,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 535,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-load(autoload: bool, recursive_load: bool)",
 											"horizontalAlignment": 0
@@ -1568,7 +1568,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 550,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "+get_files(options: SearchOptions): list<SegmentedSearchResult | File>",
 											"horizontalAlignment": 0
@@ -1587,9 +1587,9 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 565,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
-											"text": "-get_files_by_extensions(file_list: list<File>, options: SearchOptions): list<File>",
+											"text": "-get_files_by_extensions(file_list: list<File>, extensions: list<str>): list<File>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1606,7 +1606,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 580,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "-get_files_recursively(): List<File>",
 											"horizontalAlignment": 0
@@ -1625,7 +1625,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 595,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "+get_directories(options: SearchOptions)",
 											"horizontalAlignment": 0
@@ -1644,7 +1644,7 @@
 											"showShadow": false,
 											"left": 568,
 											"top": 610,
-											"width": 453.32763671875,
+											"width": 433.07861328125,
 											"height": 13,
 											"text": "+get_directories_recursively(): list<SegmentedSearchResult | Directory>",
 											"horizontalAlignment": 0
@@ -1675,7 +1675,7 @@
 									"showShadow": false,
 									"left": 563,
 									"top": 455,
-									"width": 463.32763671875,
+									"width": 443.07861328125,
 									"height": 173
 								},
 								{
@@ -1721,7 +1721,7 @@
 							"containerChangeable": true,
 							"left": 563,
 							"top": 392,
-							"width": 462.32763671875,
+							"width": 442.07861328125,
 							"height": 236,
 							"nameCompartment": {
 								"$ref": "AAAAAAGZlIskJME2ZjE="
@@ -10174,10 +10174,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGZlJqHw8G2gr0="
 									},
-									"name": "options",
-									"type": {
-										"$ref": "AAAAAAGZlLwN5MgRAjw="
-									}
+									"name": "extensions",
+									"type": "list<str>"
 								}
 							]
 						},
