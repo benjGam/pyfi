@@ -78,14 +78,31 @@ class Directory(Systorage):
             to_return.extend(directory.__get_files_recursively())
         return to_return
 
-    def get_files(self, options: pyfile.SearchOptions) -> list[pyfile.File]:
+    def __group_by_parent(
+        self, elem_list: list[pyfile.File] | list[Directory]
+    ) -> list[pyfile.SegmentedSearchResult]:
+        segmented_elem_list: list[pyfile.SegmentedSearchResult] = []
+
+        for elem in elem_list:
+            parent = elem.get_parent()
+            existing_segment = next(
+                (seg for seg in segmented_elem_list if seg.parent == parent), None
+            )
+            if existing_segment:
+                existing_segment.childs.append(elem)
+            else:
+                segmented_elem_list.append(pyfile.SegmentedSearchResult(parent, [elem]))
+        return segmented_elem_list
+
+    def get_files(
+        self, options: pyfile.SearchOptions
+    ) -> list[pyfile.SegmentedSearchResult] | list[pyfile.File]:
         file_list = self.__files
         if options.recursion:
             file_list = self.__get_files_recursively()
         if len(options.extensions) > 0:
             file_list = self.__get_files_by_extensions(file_list, options.extensions)
-
-        return self.__files
+        return self.__group_by_parent(file_list) if options.segmentation else file_list
 
     def get_directories(self):
         return self.__directories
