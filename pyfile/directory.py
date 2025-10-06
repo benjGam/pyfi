@@ -68,7 +68,8 @@ class Directory(Systorage):
                 (seg for seg in segmented_elem_list if seg.parent == parent), None
             )
             if existing_segment:
-                existing_segment.childs.append(elem)
+                if elem not in existing_segment.childs:
+                    existing_segment.childs.append(elem)
             else:
                 segmented_elem_list.append(pyfile.SegmentedSearchResult(parent, [elem]))
         return segmented_elem_list
