@@ -74,6 +74,12 @@ class Directory(Systorage):
             filter(lambda file: file.get_extension() in options.extensions, file_list)
         )
 
+    def __get_files_recursively(self) -> list[pyfile.File]:
+        to_return = self.__files
+        for directory in self.__directories:
+            to_return.extend(directory.__get_files_recursively())
+        return to_return
+
     def get_files(self):
         return self.__files
 
