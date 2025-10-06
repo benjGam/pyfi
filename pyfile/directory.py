@@ -95,6 +95,25 @@ class Directory(Systorage):
             to_return.extend(directory.__get_files_recursively())
         return to_return
 
+    def get_directories_paths(
+        self, options: pyfile.SearchOptions
+    ) -> list[str] | list[dict[str, list[str]]]:
+        getted_directories = self.get_directories(options)
+        if options.segmentation:
+            return list(
+                map(
+                    lambda segmented_result: segmented_result.to_paths(),
+                    getted_directories,
+                )
+            )
+        else:
+            return list(
+                map(
+                    lambda directory: directory.get_path(),
+                    getted_directories,
+                )
+            )
+
     def get_directories(
         self, options: pyfile.SearchOptions
     ) -> list[Directory] | list[pyfile.SegmentedSearchResult]:
