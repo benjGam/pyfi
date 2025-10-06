@@ -99,13 +99,12 @@ class Directory(Systorage):
     def get_directories_paths(
         self, options: pyfile.SearchOptions
     ) -> list[str] | list[dict[str, list[str]]]:
-        getted_directories = self.get_directories(options)
         return list(
             map(
                 lambda result: (
                     result.to_paths() if options.segmentation else result.get_path()
                 ),
-                getted_directories,
+                self.get_directories(options),
             )
         )
 
