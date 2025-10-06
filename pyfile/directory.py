@@ -100,20 +100,14 @@ class Directory(Systorage):
         self, options: pyfile.SearchOptions
     ) -> list[str] | list[dict[str, list[str]]]:
         getted_directories = self.get_directories(options)
-        if options.segmentation:
-            return list(
-                map(
-                    lambda segmented_result: segmented_result.to_paths(),
-                    getted_directories,
-                )
+        return list(
+            map(
+                lambda result: (
+                    result.to_paths() if options.segmentation else result.get_path()
+                ),
+                getted_directories,
             )
-        else:
-            return list(
-                map(
-                    lambda directory: directory.get_path(),
-                    getted_directories,
-                )
-            )
+        )
 
     def get_directories(
         self, options: pyfile.SearchOptions
