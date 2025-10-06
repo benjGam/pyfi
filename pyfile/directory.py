@@ -67,12 +67,10 @@ class Directory(Systorage):
         return self.exists()
 
     def __get_files_by_extensions(
-        self, file_list: list[pyfile.File], options: pyfile.SearchOptions
+        self, file_list: list[pyfile.File], extensions: list[str]
     ) -> list[pyfile.File]:
 
-        return list(
-            filter(lambda file: file.get_extension() in options.extensions, file_list)
-        )
+        return list(filter(lambda file: file.get_extension() in extensions, file_list))
 
     def __get_files_recursively(self) -> list[pyfile.File]:
         to_return = self.__files
@@ -80,7 +78,13 @@ class Directory(Systorage):
             to_return.extend(directory.__get_files_recursively())
         return to_return
 
-    def get_files(self):
+    def get_files(self, options: pyfile.SearchOptions) -> list[pyfile.File]:
+        file_list = self.__files
+        if options.recursion:
+            file_list = self.__get_files_recursively()
+        if len(options.extensions) > 0:
+            file_list = self.__get_files_by_extensions(file_list, options.extensions)
+
         return self.__files
 
     def get_directories(self):
