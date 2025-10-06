@@ -104,6 +104,12 @@ class Directory(Systorage):
             file_list = self.__get_files_by_extensions(file_list, options.extensions)
         return self.__group_by_parent(file_list) if options.segmentation else file_list
 
+    def __get_directories_recursively(self) -> list[Directory]:
+        to_return = self.__directories
+        for directory in self.__directories:
+            to_return.extend(directory.__get_directories_recursively())
+        return to_return
+
     def get_directories(self):
         return self.__directories
 
