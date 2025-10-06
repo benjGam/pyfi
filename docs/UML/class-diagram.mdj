@@ -1589,7 +1589,7 @@
 											"top": 565,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "+get_files_by_extensions(options: SearchOptions): list<File>",
+											"text": "-get_files_by_extensions(options: SearchOptions): list<File>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1608,7 +1608,7 @@
 											"top": 580,
 											"width": 417.3046875,
 											"height": 13,
-											"text": "+get_files_recursively(): List<File>",
+											"text": "-get_files_recursively(): List<File>",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10148,6 +10148,7 @@
 								"$ref": "AAAAAAGZlIskI8EzGMQ="
 							},
 							"name": "get_files_by_extensions",
+							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -10156,7 +10157,9 @@
 										"$ref": "AAAAAAGZlJqHw8G2gr0="
 									},
 									"name": "options",
-									"type": "SearchOptions"
+									"type": {
+										"$ref": "AAAAAAGZlLwN5MgRAjw="
+									}
 								},
 								{
 									"_type": "UMLParameter",
@@ -10176,6 +10179,7 @@
 								"$ref": "AAAAAAGZlIskI8EzGMQ="
 							},
 							"name": "get_files_recursively",
+							"visibility": "private",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
