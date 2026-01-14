@@ -83,5 +83,9 @@
   - Migration guide recommended for users upgrading from 1.x
   - New abstract methods require implementation in custom classes
 
----
+## [2.0.0] -> [2.1.0]
 
+### ✨ Added
+
+- **Implementations**
+  - `Directory` class has now behavior for `delete` method

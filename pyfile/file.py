@@ -27,16 +27,16 @@ class File(Systorage):
         return os.path.getsize(self._path.get_literal())
 
     def append(self, content: str):
-        with open(self._path.get_literal(), "a") as f:
+        with open(self._path.get_literal(), "a", encoding="utf-8") as f:
             f.write(content)
 
     def write(self, content: str):
-        with open(self._path.get_literal(), "w") as f:
+        with open(self._path.get_literal(), "w", encoding="utf-8") as f:
             f.write(content)
 
     def read_to_end(self) -> str:
         file_content: str
-        with open(self._path.get_literal(), "r") as f:
+        with open(self._path.get_literal(), "r", encoding="utf-8") as f:
             f.seek(0)
             file_content = f.read()
         return file_content

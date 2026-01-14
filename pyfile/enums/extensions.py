@@ -24,7 +24,6 @@ class Image(Enum):
     JPG = ".jpg"
     JPEG = ".jpeg"
     PNG = ".png"
-    GIF = ".gif"
     BMP = ".bmp"
     TIFF = ".tiff"
     TIF = ".tif"
@@ -45,6 +44,7 @@ class Video(Enum):
     MKV = ".mkv"
     MOV = ".mov"
     WMV = ".wmv"
+    GIF = ".gif"  # Not accurate but practicly better
 
 
 class Code(Enum):
