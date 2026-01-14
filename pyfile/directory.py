@@ -2,6 +2,7 @@ from __future__ import annotations
 from .systorage import Systorage
 import os
 import pyfile
+import shutil
 
 
 class Directory(Systorage):
@@ -143,9 +144,10 @@ class Directory(Systorage):
         return self.exists()
 
     def delete(self, delete_all_content: bool = False) -> bool:
-        for file in self.get_files(pyfile.SearchOptions(True)):
-            file.delete(delete_all_content)
-        os.rmdir(super().get_path_object().get_literal())
+        if delete_all_content:
+            for file in self.get_files(pyfile.SearchOptions(True)):
+                file.delete(delete_all_content)
+        shutil.rmtree(super().get_path_object().get_literal())
         return self.exists()
 
     def _update_metadata(self, path):
