@@ -34,12 +34,13 @@ class Systorage(ABC):
         pass
 
     def rename(self, new_name: str) -> bool:
-        if "/" or "\\" in new_name:
+        if "/" in new_name or "\\" in new_name:
             raise Exception("This method is not intended to be used as move method")
         old_path = self._path.get_literal()
-        new_path = f"{str(self._path.get_complex().parent())}/{new_name}"
+        new_path = f"{str(self._path.get_complex().parent)}/{new_name}"
         os.rename(self._path._literal, new_path)
         self._update_metadata(new_path)
+        self._path = Path(new_path)
         return os.path.exists(old_path) == False and os.path.exists(new_path) == True
 
     def move(self, new_path: str) -> bool:
